@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/qwe/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="aWVSarl-awvs.py:联合arl灯塔进行扫描 用户名密码：&amp;#x61;&amp;#119;&amp;#x76;&amp;#x73;&amp;#64;&amp;#x61;&amp;#119;&amp;#118;&amp;#115;&amp;#46;&amp;#99;&amp;#x6f;&amp;#x6d;&#x2F;&amp;#x41;&amp;#x77;&amp;#x76;&amp;#x73;&amp;#x40;&amp;#97;&amp;#x77;&amp;#118;&amp;#115;&amp;#46;&amp;#99;&amp;#x6f;&amp;#109; docker安装1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="漏扫工具使用">
+<meta property="og:url" content="http://example.com/2022/07/29/%E6%BC%8F%E6%89%AB%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="ChillyBerry&#39;s Blog">
+<meta property="og:description" content="aWVSarl-awvs.py:联合arl灯塔进行扫描 用户名密码：&amp;#x61;&amp;#119;&amp;#x76;&amp;#x73;&amp;#64;&amp;#x61;&amp;#119;&amp;#118;&amp;#115;&amp;#46;&amp;#99;&amp;#x6f;&amp;#x6d;&#x2F;&amp;#x41;&amp;#x77;&amp;#x76;&amp;#x73;&amp;#x40;&amp;#97;&amp;#x77;&amp;#118;&amp;#115;&amp;#46;&amp;#99;&amp;#x6f;&amp;#109; docker安装1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-29T04:21:50.000Z">
+<meta property="article:modified_time" content="2022-07-29T06:11:23.741Z">
+<meta property="article:author" content="jojo">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/07/29/%E6%BC%8F%E6%89%AB%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>漏扫工具使用 | ChillyBerry's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ChillyBerry's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/29/%E6%BC%8F%E6%89%AB%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="jojo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChillyBerry's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          漏扫工具使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-29 12:21:50 / 修改时间：14:11:23" itemprop="dateCreated datePublished" datetime="2022-07-29T12:21:50+08:00">2022-07-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="aWVS"><a href="#aWVS" class="headerlink" title="aWVS"></a>aWVS</h2><p>arl-awvs.py:联合arl灯塔进行扫描</p>
+<p>用户名密码：<a href="mailto:&#x61;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#115;&#46;&#99;&#x6f;&#x6d;">&#x61;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#115;&#46;&#99;&#x6f;&#x6d;</a>&#x2F;<a href="mailto:&#x41;&#x77;&#x76;&#x73;&#x40;&#97;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#109;">&#x41;&#x77;&#x76;&#x73;&#x40;&#97;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#109;</a></p>
+<h4 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo docker search awvs</span><br><span class="line">sudo docker pull xrsec/awvs</span><br><span class="line">docker run -it -d --name awvs -p 3445:3443 --restart=always xrsec/awvs:latest</span><br></pre></td></tr></table></figure>
+
+<h3 id="破解步骤"><a href="#破解步骤" class="headerlink" title="破解步骤"></a>破解步骤</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">复制license_info.json&amp;wa_data.dat---&gt;</span><br><span class="line">windows&gt;&gt;&gt;C:/PrpgramData/Acunetix/shared/license/</span><br><span class="line">linux&gt;&gt;&gt;/home/acunetix/.acunetix/data/license/</span><br><span class="line">mac&gt;&gt;&gt;/Applications/Acunetix.app/Contents/Resources/data/license</span><br><span class="line"></span><br><span class="line">docker&gt;&gt;&gt;docker cp license_info.json&amp;wa_data.dat---&gt; doker-id:/home/acunetix/.acunetix/data/license</span><br><span class="line"></span><br><span class="line">修改hosts文件：</span><br><span class="line">windows：C:\Windows\System32\drivers\etc</span><br><span class="line">linux:/etc/hosts</span><br><span class="line">追加：</span><br><span class="line">127.0.0.1 updates.acunetix.com</span><br><span class="line">127.0.0.1 erp.acunetix.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="Goby"><a href="#Goby" class="headerlink" title="Goby"></a>Goby</h2><p>针对内网资产</p>
+<h2 id="xray"><a href="#xray" class="headerlink" title="xray"></a>xray</h2><h4 id="一、基础爬虫模式"><a href="#一、基础爬虫模式" class="headerlink" title="一、基础爬虫模式"></a>一、基础爬虫模式</h4><h6 id="1、爬虫获取链接后进行漏扫"><a href="#1、爬虫获取链接后进行漏扫" class="headerlink" title="1、爬虫获取链接后进行漏扫"></a>1、爬虫获取链接后进行漏扫</h6><p>.&#x2F;xray webscan –basic-crawler url -html-output a.html</p>
+<h4 id="二、使用代理模式扫描「常用」"><a href="#二、使用代理模式扫描「常用」" class="headerlink" title="二、使用代理模式扫描「常用」"></a>二、使用代理模式扫描「常用」</h4><h6 id="1、安装浏览器插件switchOmega"><a href="#1、安装浏览器插件switchOmega" class="headerlink" title="1、安装浏览器插件switchOmega"></a>1、安装浏览器插件switchOmega</h6><h6 id="2、启动xray，使用命令生成证书：xray-exe-genca"><a href="#2、启动xray，使用命令生成证书：xray-exe-genca" class="headerlink" title="2、启动xray，使用命令生成证书：xray.exe genca"></a>2、启动xray，使用命令生成证书：xray.exe genca</h6><h6 id="3、安装并信任生成的证书"><a href="#3、安装并信任生成的证书" class="headerlink" title="3、安装并信任生成的证书"></a>3、安装并信任生成的证书</h6><h6 id="4、启动xray代理：第一次启动，当前目录会生成config-yml"><a href="#4、启动xray代理：第一次启动，当前目录会生成config-yml" class="headerlink" title="4、启动xray代理：第一次启动，当前目录会生成config.yml"></a>4、启动xray代理：第一次启动，当前目录会生成config.yml</h6><p>mitm中restriction中hostname_allowed增加testphp.vulnweb.com<br>.&#x2F;xray webscan –listen 127.0.0.1:7777 –html-output pro.html<br>网页代理选择http 127.0.0.1:7777</p>
+<h2 id="nuclei"><a href="#nuclei" class="headerlink" title="nuclei"></a>nuclei</h2><p>安装目录在&#x2F;usr&#x2F;local&#x2F;bin下</p>
+<p>github安装使用&#x2F;docker</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/projectdiscovery/nuclei-templates</span><br><span class="line">tar -xzvf nuclei-linux-amd64.tar</span><br><span class="line">mv nuclei-linux-amd64 /usr/bin/nuclei</span><br><span class="line">nuclei -h</span><br></pre></td></tr></table></figure>
+
+<h6 id="单个目标扫描"><a href="#单个目标扫描" class="headerlink" title="单个目标扫描"></a>单个目标扫描</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nuclei -u http://192.168.204.179</span><br></pre></td></tr></table></figure>
+
+<h6 id="多个目标扫描"><a href="#多个目标扫描" class="headerlink" title="多个目标扫描"></a>多个目标扫描</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nuclei -list http_urls.txt</span><br></pre></td></tr></table></figure>
+
+<h6 id="自定义模板目录或多个模板目录"><a href="#自定义模板目录或多个模板目录" class="headerlink" title="自定义模板目录或多个模板目录"></a>自定义模板目录或多个模板目录</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nuclei -u http://192.168.204.179/dvwa/login.php -t default-logins/</span><br></pre></td></tr></table></figure>
+
+<h6 id="支持过滤器"><a href="#支持过滤器" class="headerlink" title="支持过滤器"></a>支持过滤器</h6><p>只想扫描高危漏洞：-serverity critical,high</p>
+<h2 id="scan4all"><a href="#scan4all" class="headerlink" title="scan4all"></a>scan4all</h2><p>集成vscan、nuclei、ksubdomain、subfinder等，全自动化、智能化的渗透测试工具</p>
+<p>安装库：sudo apt install -y libpcap-dev golang git</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./scan4all -host 192.168.204.179</span><br></pre></td></tr></table></figure>
+
+<h2 id="afrog"><a href="#afrog" class="headerlink" title="afrog"></a>afrog</h2><p>PoC支持CVE、CNVD、默认口令、信息泄露、指纹识别、未授权访问、任意文件读取、命令执行等多种漏洞类型</p>
+<h6 id="扫描单个目标"><a href="#扫描单个目标" class="headerlink" title="扫描单个目标"></a>扫描单个目标</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./afrog -t http://192.168.204.179</span><br></pre></td></tr></table></figure>
+
+<h6 id="扫描多个目标"><a href="#扫描多个目标" class="headerlink" title="扫描多个目标"></a>扫描多个目标</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./afrog -T url.txt -o url.html</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#按PoC关键字扫描</span><br><span class="line">-s tomcat,springboot,shiro</span><br><span class="line">#按PoC漏洞等级扫描</span><br><span class="line">-S high,critical</span><br></pre></td></tr></table></figure>
+
+<h2 id="特定类型漏扫工具"><a href="#特定类型漏扫工具" class="headerlink" title="特定类型漏扫工具"></a>特定类型漏扫工具</h2><h3 id="BBScan"><a href="#BBScan" class="headerlink" title="BBScan"></a>BBScan</h3><p>高并发、轻量级「目标多，想迅速定位」</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/lijiejie/BBScan</span><br><span class="line">pip3 install -r requirements.txt</span><br><span class="line">python BBScan.py -f urls.txt</span><br><span class="line">python BBScan.py --host www.target.com --network 28</span><br></pre></td></tr></table></figure>
+
+<h3 id="Thinkphp漏扫工具"><a href="#Thinkphp漏扫工具" class="headerlink" title="Thinkphp漏扫工具"></a>Thinkphp漏扫工具</h3><h3 id="Weblogic漏扫工具"><a href="#Weblogic漏扫工具" class="headerlink" title="Weblogic漏扫工具"></a>Weblogic漏扫工具</h3>
+    </div>
+
+    
+    
+    <script src="//sdk.jinrishici.com/v2/browser/jinrishici.js"></script>
+<script>
+  jinrishici.load((result) => {
+    let jrsc = document.getElementById('jrsc');
+    const data = result.data;
+    let author = data.origin.author;
+    let title = '《' + data.origin.title + '》';
+    let content = data.content.substr(0, data.content.length - 1);
+    let dynasty = data.origin.dynasty.substr(0, data.origin.dynasty.length - 1);
+    jrsc.innerText = content + ' @ ' + dynasty + '·' + author + title;
+  });
+</script>
+<div style="text-align: center"><span id="jrsc" >正在加载今日诗词....</span></div>
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/" rel="prev" title="weblogic-SSRF漏洞">
+      <i class="fa fa-chevron-left"></i> weblogic-SSRF漏洞
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#aWVS"><span class="nav-number">1.</span> <span class="nav-text">aWVS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker%E5%AE%89%E8%A3%85"><span class="nav-number">1.0.1.</span> <span class="nav-text">docker安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A0%B4%E8%A7%A3%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.1.</span> <span class="nav-text">破解步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Goby"><span class="nav-number">2.</span> <span class="nav-text">Goby</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xray"><span class="nav-number">3.</span> <span class="nav-text">xray</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E7%A1%80%E7%88%AC%E8%99%AB%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.0.1.</span> <span class="nav-text">一、基础爬虫模式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1%E3%80%81%E7%88%AC%E8%99%AB%E8%8E%B7%E5%8F%96%E9%93%BE%E6%8E%A5%E5%90%8E%E8%BF%9B%E8%A1%8C%E6%BC%8F%E6%89%AB"><span class="nav-number">3.0.1.0.1.</span> <span class="nav-text">1、爬虫获取链接后进行漏扫</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E6%89%AB%E6%8F%8F%E3%80%8C%E5%B8%B8%E7%94%A8%E3%80%8D"><span class="nav-number">3.0.2.</span> <span class="nav-text">二、使用代理模式扫描「常用」</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1%E3%80%81%E5%AE%89%E8%A3%85%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6switchOmega"><span class="nav-number">3.0.2.0.1.</span> <span class="nav-text">1、安装浏览器插件switchOmega</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2%E3%80%81%E5%90%AF%E5%8A%A8xray%EF%BC%8C%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6%EF%BC%9Axray-exe-genca"><span class="nav-number">3.0.2.0.2.</span> <span class="nav-text">2、启动xray，使用命令生成证书：xray.exe genca</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3%E3%80%81%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BF%A1%E4%BB%BB%E7%94%9F%E6%88%90%E7%9A%84%E8%AF%81%E4%B9%A6"><span class="nav-number">3.0.2.0.3.</span> <span class="nav-text">3、安装并信任生成的证书</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4%E3%80%81%E5%90%AF%E5%8A%A8xray%E4%BB%A3%E7%90%86%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%90%AF%E5%8A%A8%EF%BC%8C%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%BC%9A%E7%94%9F%E6%88%90config-yml"><span class="nav-number">3.0.2.0.4.</span> <span class="nav-text">4、启动xray代理：第一次启动，当前目录会生成config.yml</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nuclei"><span class="nav-number">4.</span> <span class="nav-text">nuclei</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8D%95%E4%B8%AA%E7%9B%AE%E6%A0%87%E6%89%AB%E6%8F%8F"><span class="nav-number">4.0.0.0.1.</span> <span class="nav-text">单个目标扫描</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E7%9B%AE%E6%A0%87%E6%89%AB%E6%8F%8F"><span class="nav-number">4.0.0.0.2.</span> <span class="nav-text">多个目标扫描</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E6%88%96%E5%A4%9A%E4%B8%AA%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95"><span class="nav-number">4.0.0.0.3.</span> <span class="nav-text">自定义模板目录或多个模板目录</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">4.0.0.0.4.</span> <span class="nav-text">支持过滤器</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scan4all"><span class="nav-number">5.</span> <span class="nav-text">scan4all</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#afrog"><span class="nav-number">6.</span> <span class="nav-text">afrog</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%AB%E6%8F%8F%E5%8D%95%E4%B8%AA%E7%9B%AE%E6%A0%87"><span class="nav-number">6.0.0.0.1.</span> <span class="nav-text">扫描单个目标</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%AB%E6%8F%8F%E5%A4%9A%E4%B8%AA%E7%9B%AE%E6%A0%87"><span class="nav-number">6.0.0.0.2.</span> <span class="nav-text">扫描多个目标</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E6%BC%8F%E6%89%AB%E5%B7%A5%E5%85%B7"><span class="nav-number">7.</span> <span class="nav-text">特定类型漏扫工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BBScan"><span class="nav-number">7.1.</span> <span class="nav-text">BBScan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thinkphp%E6%BC%8F%E6%89%AB%E5%B7%A5%E5%85%B7"><span class="nav-number">7.2.</span> <span class="nav-text">Thinkphp漏扫工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weblogic%E6%BC%8F%E6%89%AB%E5%B7%A5%E5%85%B7"><span class="nav-number">7.3.</span> <span class="nav-text">Weblogic漏扫工具</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="jojo"
+      src="/images/1.jpg">
+  <p class="site-author-name" itemprop="name">jojo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jojo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/qwe/anime.min.js"></script>
+  <script src="/qwe/velocity/velocity.min.js"></script>
+  <script src="/qwe/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

