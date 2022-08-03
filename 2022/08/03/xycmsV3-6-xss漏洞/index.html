@@ -20,15 +20,27 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ChillyBerry&#39;s Blog">
-<meta property="og:url" content="http://example.com/tags/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/index.html">
+  <meta name="description" content="搭建xycms1、将uploads_code文件夹下的内容放至根目录 2、访问http:&#x2F;&#x2F;localhost&#x2F;install&#x2F;进行安装「默认账号xyhcms 密码安装时自定义 」 3、安装完成后为了保证数据安全，务必删除install目录 漏洞利用在新闻中心找一篇文章评论，管理员审核后返回管理员cookie  假装管理员访问后台：http:&#x2F;&#x2F;192.168.2.142:8001&#x2F;xyhai.p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xycmsV3.6-xss漏洞">
+<meta property="og:url" content="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="ChillyBerry&#39;s Blog">
+<meta property="og:description" content="搭建xycms1、将uploads_code文件夹下的内容放至根目录 2、访问http:&#x2F;&#x2F;localhost&#x2F;install&#x2F;进行安装「默认账号xyhcms 密码安装时自定义 」 3、安装完成后为了保证数据安全，务必删除install目录 漏洞利用在新闻中心找一篇文章评论，管理员审核后返回管理员cookie  假装管理员访问后台：http:&#x2F;&#x2F;192.168.2.142:8001&#x2F;xyhai.p">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803211212164.png">
+<meta property="og:image" content="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803213331569.png">
+<meta property="og:image" content="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803215914100.png">
+<meta property="og:image" content="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803220016470.png">
+<meta property="og:image" content="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803220448535.png">
+<meta property="og:image" content="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803213649909.png">
+<meta property="article:published_time" content="2022-08-03T13:01:38.000Z">
+<meta property="article:modified_time" content="2022-08-03T14:07:44.434Z">
 <meta property="article:author" content="jojo">
+<meta property="article:tag" content="xss">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803211212164.png">
 
-<link rel="canonical" href="http://example.com/tags/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/">
+<link rel="canonical" href="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/">
 
 
 <script id="page-configurations">
@@ -36,12 +48,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 未授权访问 | ChillyBerry's Blog</title>
+  <title>xycmsV3.6-xss漏洞 | ChillyBerry's Blog</title>
   
 
 
@@ -172,51 +184,117 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">未授权访问
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="jojo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChillyBerry's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          xycmsV3.6-xss漏洞
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-03 21:01:38 / 修改时间：22:07:44" itemprop="dateCreated datePublished" datetime="2022-08-03T21:01:38+08:00">2022-08-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">漏洞利用</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+        <h3 id="搭建xycms"><a href="#搭建xycms" class="headerlink" title="搭建xycms"></a>搭建xycms</h3><p>1、将uploads_code文件夹下的内容放至根目录</p>
+<p>2、访问<a target="_blank" rel="noopener" href="http://localhost/install/%E8%BF%9B%E8%A1%8C%E5%AE%89%E8%A3%85%E3%80%8C%E9%BB%98%E8%AE%A4%E8%B4%A6%E5%8F%B7xyhcms">http://localhost/install/进行安装「默认账号xyhcms</a> 密码安装时自定义 」</p>
+<p>3、安装完成后为了保证数据安全，务必删除install目录</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>在新闻中心找一篇文章评论，管理员审核后返回管理员cookie</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803211212164.png" alt="image-20220803211212164"></p>
+<p>假装管理员访问后台：<a target="_blank" rel="noopener" href="http://192.168.2.142:8001/xyhai.php?s=/Login/index">http://192.168.2.142:8001/xyhai.php?s=/Login/index</a>   「xyhcms&#x2F;123456」</p>
+<p>进入评论管理审核 审核完成后点击编辑-保存-xss漏洞触发成功</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803213331569.png" alt="image-20220803213331569"></p>
+<p>linux中的beef成功获取，Browser—&gt;Hooked Domain —&gt;Get Cookie</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803215914100.png" alt="image-20220803215914100"></p>
+<p>管理员的cookie：cookie&#x3D;PHPSESSID&#x3D;dcc41v231dohkhp9ccsqnhn802;</p>
+<p>和我自己伪造管理员登录的cookie相同</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803220016470.png" alt="image-20220803220016470"></p>
+<p>伪造身份成功登录</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803220448535.png" alt="image-20220803220448535"></p>
+<p>注意：我windows虚拟机搭建的xyhcms在新增评论时，网址必须是明确的ip，不能是localhost，否则会被linux的beef识别错误。</p>
+<img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803213649909.png" alt="image-20220803213649909" style="zoom:50%;">
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    <script src="//sdk.jinrishici.com/v2/browser/jinrishici.js"></script>
+<script>
+  jinrishici.load((result) => {
+    let jrsc = document.getElementById('jrsc');
+    const data = result.data;
+    let author = data.origin.author;
+    let title = '《' + data.origin.title + '》';
+    let content = data.content.substr(0, data.content.length - 1);
+    let dynasty = data.origin.dynasty.substr(0, data.origin.dynasty.length - 1);
+    jrsc.innerText = content + ' @ ' + dynasty + '·' + author + title;
+  });
+</script>
+<div style="text-align: center"><span id="jrsc" >正在加载今日诗词....</span></div>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-07-27T12:52:02+08:00"
-              content="2022-07-27">
-          07-27
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/xss/" rel="tag"># xss</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/" itemprop="url">
-            <span itemprop="name">搭建redis-redis未授权访问</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/03/beef%E4%BD%BF%E7%94%A8/" rel="prev" title="beef使用">
+      <i class="fa fa-chevron-left"></i> beef使用
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -269,6 +347,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%AD%E5%BB%BAxycms"><span class="nav-number">1.</span> <span class="nav-text">搭建xycms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">漏洞利用</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

